@@ -1,8 +1,9 @@
 from pico2d import *
 import game_framework
 import title_state
-from main_state_ui import*
+from main_state_ui import *
 from player import*
+name = "mainState"
 def enter():
     global player,main_state_ui
     player=Player()
@@ -34,15 +35,15 @@ def handle_events(st):
         #방향키를 떼면 이전 방향을 기억하고, 뗀곳의 dx, dy조절
         elif event.type==SDL_KEYUP:
             if event.key==SDLK_RIGHT:
-                player.dx-=1
+                player.dx=0
                 player.prior_dir='Right'
             elif event.key==SDLK_LEFT:
-                player.dx+=1
+                player.dx=0
                 player.prior_dir='Left'
             elif event.key==SDLK_UP:
-                player.dy-=1
+                player.dy=0
             elif event.key==SDLK_DOWN:
-                player.dy+=1
+                player.dy=0
 
 
 def update(st):

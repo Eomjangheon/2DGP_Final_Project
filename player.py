@@ -1,5 +1,7 @@
 from pico2d import*
-import random
+import level_up_state
+import game_framework
+import main_state
 
 class Player:
     image = None
@@ -39,10 +41,20 @@ class Player:
                 self.image.clip_draw(self.frame*32,0,32,32,self.x,self.y,64,64)
             elif self.prior_dir=='Left':
                 self.image.clip_composite_draw(self.frame*32,0,32,32,0,'h',self.x,self.y,64,64)
+
     def level_up(self):
         self.level+=1
         self.exp-=self.expCoe
         self.expCoe*=1.1
+        if(self.dx>0):
+            self.prior_dir='Right'
+        else:
+            self.prior_dir='Left'
+        self.dx=0
+        self.dy=0
+        
+        main_state.draw(1)
+        game_framework.push_state(level_up_state)
 
 
     
