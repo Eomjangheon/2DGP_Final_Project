@@ -1,14 +1,17 @@
 from pico2d import *
 import game_framework
 import title_state
+from main_state_ui import*
 from player import*
 def enter():
-    global player
+    global player,main_state_ui
     player=Player()
+    main_state_ui=Main_state_ui()
 
 def exit():
-    global player
+    global player,main_state_ui
     del(player)
+    del(main_state_ui)
 
 
 def handle_events(st):
@@ -47,8 +50,10 @@ def update(st):
     player.update()
 
 def draw(st):
+    global player, main_state_ui
     clear_canvas()
     player.draw()
+    main_state_ui.draw()
     update_canvas()
     delay(0.02)
 

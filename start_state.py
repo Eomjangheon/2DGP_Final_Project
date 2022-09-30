@@ -17,8 +17,9 @@ def enter():
     image.append(load_image('res/start_img/title.png'))
     start_font=load_font('res/fonts/KO.ttf',50)
 def exit():
-    global image
+    global image,start_font
     del(image)
+    del(start_font)
 
 def update(a):
     global font_time
