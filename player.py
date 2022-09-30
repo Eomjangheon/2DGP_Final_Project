@@ -20,9 +20,7 @@ class Player:
     def update(self):
         self.frame_count=(self.frame_count+1)%32
         self.frame=self.frame_count//8
-        self.x+=self.dx
-        self.y+=self.dy
-        self.exp+=1
+        #self.exp+=1
         if self.exp>=self.expCoe:
             self.level_up()
     

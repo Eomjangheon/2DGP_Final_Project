@@ -32,6 +32,8 @@ def update(st):
 def draw(st):
     global level_up_state_ui
     clear_canvas()
+    for i in range(9):
+        main_state.backgrounds[i].draw()
     main_state.player.draw()
     main_state.main_state_ui.draw()
     level_up_state_ui.draw()
