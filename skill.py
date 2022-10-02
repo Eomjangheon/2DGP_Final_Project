@@ -2,6 +2,7 @@ from pico2d import*
 import random
 import main_state
 import math
+import game_world
 
 class Skill:
     def __init__(self):
@@ -11,6 +12,8 @@ class Skill:
         self.y-=main_state.player.dy
         self.x+=self.dx
         self.y+=self.dy
+        if (self.x>1280 or self.x<0 or self.y<0 or self.y>800):
+            game_world.remove_object(self)
 
     
     
@@ -37,7 +40,7 @@ class FireBall(Skill):
             self.image=load_image("res/vfx/fireball.png")
             
     def draw(self):
-        self.image.clip_composite_draw(0, 0, self.w, self.h, self.theta, '', self.x, self.y, self.w, self.h)
+        self.image.clip_composite_draw(0, 0, self.w, self.h, self.theta, '', self.x, self.y, self.w*self.lv, self.h*self.lv)
 
 
 

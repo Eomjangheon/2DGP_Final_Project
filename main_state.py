@@ -4,6 +4,7 @@ import game_framework
 import game_world
 from main_state_ui import *
 from player import*
+import exp_jam
 name = "mainState"
 def enter():
     mapSet=[[-1280,1280],[0,1280],[1280,1280],[-1280,0],[0,0],[1280,0],[-1280,-1280],[0,-1280],[1280,-1280]]
@@ -56,6 +57,8 @@ def handle_events(st):
 
 
 def update(st):
+    jam=exp_jam.Exp_jam()
+    game_world.add_object(jam,1)
     for game_object in game_world.all_objects():
         game_object.update()
 
