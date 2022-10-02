@@ -1,7 +1,7 @@
 from pico2d import *
 from background import*
 import game_framework
-import title_state
+import game_world
 from main_state_ui import *
 from player import*
 name = "mainState"
@@ -12,15 +12,16 @@ def enter():
     main_state_ui=Main_state_ui()
     backgrounds=[Background() for i in range(9)]
     for i in range(9):
-        backgrounds[i].x+=mapSet[i][0]
-        backgrounds[i].y+=mapSet[i][1]
+            backgrounds[i].x+=mapSet[i][0]
+            backgrounds[i].y+=mapSet[i][1]
+    game_world.add_objects(backgrounds,0)
+    game_world.add_object(player,1)
+    game_world.add_object(main_state_ui,2)
+    
 
 
 def exit():
-    global player,main_state_ui,backgrounds
-    del(player)
-    del(main_state_ui)
-    del(backgrounds)
+    game_world.clear()
 
 
 def handle_events(st):
@@ -31,15 +32,15 @@ def handle_events(st):
             game_framework.quit()
         elif event.type==SDL_KEYDOWN:
             if event.key==SDLK_RIGHT:
-                player.dx=10
+                player.dx=2
                 player.prior_dir='Right'
             elif event.key==SDLK_LEFT:
-                player.dx=-10
+                player.dx=-2
                 player.prior_dir='Left'
             elif event.key==SDLK_UP:
-                player.dy=10
+                player.dy=2
             elif event.key==SDLK_DOWN:
-                player.dy=-10
+                player.dy=-2
             elif event.key==SDLK_ESCAPE:
                 pass
         #방향키를 떼면 이전 방향을 기억하고, 뗀곳의 dx, dy조절
@@ -55,18 +56,13 @@ def handle_events(st):
 
 
 def update(st):
-    global player,backgrounds
-    player.update()
-    for i in range(9):
-        backgrounds[i].update()
+    for game_object in game_world.all_objects():
+        game_object.update()
 
 def draw(st):
-    global player, main_state_ui
     clear_canvas()
-    for i in range(9):
-        backgrounds[i].draw()
-    player.draw()
-    main_state_ui.draw()
+    for game_object in game_world.all_objects():
+        game_object.draw()
     update_canvas()
     delay(0.02)
 

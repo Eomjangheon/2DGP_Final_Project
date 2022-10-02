@@ -19,3 +19,6 @@ class Main_state_ui:
         self.exp_box.draw(640,780,1500,40)
         self.exp_bar.draw(main_state.player.exp/main_state.player.expCoe/2,782,main_state.player.exp/main_state.player.expCoe*2560,36)
         self.level_font.draw(1185,780,"LV: {}".format(main_state.player.level),(255,255,255))
+
+    def update(self):
+        pass

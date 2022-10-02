@@ -2,6 +2,8 @@ from pico2d import*
 import level_up_state
 import game_framework
 import main_state
+import skill
+import game_world
 
 class Player:
     image = None
@@ -14,6 +16,10 @@ class Player:
         self.level=1
         self.exp=0
         self.expCoe=10
+        #fireball
+        self.my_skill=[1,0,0]
+        self.timerSkill=0
+        
         if Player.image==None:
             Player.image=load_image('res/character/Antonio_Sheet.png')
     
@@ -21,8 +27,14 @@ class Player:
         self.frame_count=(self.frame_count+1)%32
         self.frame=self.frame_count//8
         #self.exp+=1
+        self.timerSkill+=0.2
         if self.exp>=self.expCoe:
             self.level_up()
+        if self.my_skill[0]!=0:
+            if self.timerSkill>2:
+                self.fire_ball()
+                self.timerSkill=0
+
     
     def draw(self):
         if(self.dx == 0 and self.dy == 0):
@@ -53,6 +65,11 @@ class Player:
         
         main_state.draw(1)
         game_framework.push_state(level_up_state)
+
+    def fire_ball(self):
+        fireball=skill.FireBall(self.my_skill[0])
+        game_world.add_object(fireball,1)
+
 
 
     
