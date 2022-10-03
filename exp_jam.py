@@ -20,16 +20,14 @@ class Exp_jam:
         self.y-=main_state.player.dy
         if(self.isEat==False):
             if self.x<640+50 and self.x>640-50 and self.y<400+50 and self.y>400-50:
-                self.isEat=True
-                self.dx=(self.x-640)/5
-                self.ax=-self.dx/3
-                self.dy=(self.y-400)/5
-                self.ay=-self.dy/3
+                self.eatSet()
+            #elif len(game_world.objects[1])>100:
+            #    self.eatSet()
         else:
             self.eat()
 
     def draw(self):
-        self.image.draw(self.x,self.y)
+        self.image.draw(self.x,self.y,22,28)
 
     def eat(self):
         self.x+=self.dx
@@ -40,6 +38,12 @@ class Exp_jam:
         if self.count==10:
             main_state.player.exp+=self.exp
             game_world.remove_object(self)
+    def eatSet(self):
+            self.isEat=True
+            self.dx=(self.x-640)/5
+            self.ax=-self.dx/3
+            self.dy=(self.y-400)/5
+            self.ay=-self.dy/3
 
 
 

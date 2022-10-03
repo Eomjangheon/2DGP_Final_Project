@@ -4,6 +4,7 @@ import main_state
 import math
 import game_world
 
+
 class Skill:
     def __init__(self):
         pass

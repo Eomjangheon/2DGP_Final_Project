@@ -6,9 +6,12 @@ from main_state_ui import *
 from player import*
 import exp_jam
 name = "mainState"
+#index, name,
+skill_name=[[0,'불의 지팡이','무작위 적을 향해 발사되며 큰 피해를 줍니다.','갯수가 1개 증가하고 강력해집니다.','크기가 커지며...','크기가 커지며...','크기가 커지며...'],
+            [1,'채찍','수평으로 적을 관통해 공격합니다.']]
 def enter():
     mapSet=[[-1280,1280],[0,1280],[1280,1280],[-1280,0],[0,0],[1280,0],[-1280,-1280],[0,-1280],[1280,-1280]]
-    global player,main_state_ui,backgrounds
+    global player,main_state_ui,backgrounds,gems
     player=Player()
     main_state_ui=Main_state_ui()
     backgrounds=[Background() for i in range(9)]
@@ -17,7 +20,7 @@ def enter():
             backgrounds[i].y+=mapSet[i][1]
     game_world.add_objects(backgrounds,0)
     game_world.add_object(player,1)
-    game_world.add_object(main_state_ui,2)
+    game_world.add_object(main_state_ui,10)
     
 
 
@@ -55,10 +58,9 @@ def handle_events(st):
             elif event.key==SDLK_DOWN:
                 player.dy=0
 
-
 def update(st):
     jam=exp_jam.Exp_jam()
-    game_world.add_object(jam,1)
+    game_world.add_object(jam,2)
     for game_object in game_world.all_objects():
         game_object.update()
 
@@ -67,7 +69,7 @@ def draw(st):
     for game_object in game_world.all_objects():
         game_object.draw()
     update_canvas()
-    delay(0.02)
+    delay(0.016)
 
 def pause(): pass
 def resume(): pass

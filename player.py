@@ -67,8 +67,9 @@ class Player:
         game_framework.push_state(level_up_state)
 
     def fire_ball(self):
-        fireball=skill.FireBall(self.my_skill[0])
-        game_world.add_object(fireball,1)
+        for i in range(self.my_skill[0]):
+            fireball=skill.FireBall(self.my_skill[0])
+            game_world.add_object(fireball,4)
 
 
 

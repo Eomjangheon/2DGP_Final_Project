@@ -1,13 +1,17 @@
 from pico2d import *
 import game_framework
 import title_state
+import random
 from main_state_ui import*
 import main_state
 from level_up_state_ui import*
+import game_world
 name = "levelUpState"
 def enter():
     global level_up_state_ui
     level_up_state_ui=Level_up_state_ui()
+    random.shuffle(level_up_state_ui.getSkill)
+    
     pass
 
 def exit():
@@ -17,6 +21,7 @@ def exit():
 
 
 def handle_events(st):
+    global level_up_state_ui
     events = get_events()
     for event in events:
         if event.type==SDL_QUIT:
@@ -24,7 +29,13 @@ def handle_events(st):
         elif event.type==SDL_KEYDOWN:
             if event.key==SDLK_ESCAPE:
                 game_framework.pop_state()
-                
+            elif event.key==SDLK_DOWN and level_up_state_ui.selectNum<2:
+                level_up_state_ui.selectNum+=1
+            elif event.key==SDLK_UP and level_up_state_ui.selectNum>0:
+                level_up_state_ui.selectNum-=1
+            elif event.key==SDLK_SPACE:
+                main_state.player.my_skill[level_up_state_ui.getSkill[level_up_state_ui.selectNum]]+=1
+                game_framework.pop_state()
         
 def update(st):
     pass

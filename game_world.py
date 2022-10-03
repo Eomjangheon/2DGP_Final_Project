@@ -1,7 +1,10 @@
 # layer 0: Background Objects
-# layer 1: Foreground Objects
-# layer 2: UI objects
-objects = [[],[],[]]
+# layer 1: character
+# layer 2: jem
+# layer 3: monster
+# layer 4: skill
+# layer 10: UI objects
+objects = [[],[],[],[],[],[],[],[],[],[],[]]
 def add_object(o, layer):
     objects[layer].append(o)
 
