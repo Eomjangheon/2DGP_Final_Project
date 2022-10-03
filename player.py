@@ -7,6 +7,7 @@ import game_world
 
 class Player:
     image = None
+    hp_bar=None
     def __init__(self):
         self.x,self.y=640,400
         self.dx,self.dy=0,0
@@ -15,6 +16,8 @@ class Player:
         self.frame_count=0
         self.level=1
         self.exp=0
+        self.hp=100
+        self.max_hp=100
         self.expCoe=10
         #fireball
         self.my_skill=[1,0,0]
@@ -22,11 +25,15 @@ class Player:
         
         if Player.image==None:
             Player.image=load_image('res/character/Antonio_Sheet.png')
+        if Player.hp_bar==None:
+            Player.hp_bar=load_image('res/ui/button_c8_normal.png')
     
     def update(self):
         self.frame_count=(self.frame_count+1)%32
         self.frame=self.frame_count//8
         #self.exp+=1
+        self.hp-=1
+
         self.timerSkill+=0.2
         if self.exp>=self.expCoe:
             self.level_up()
@@ -51,6 +58,7 @@ class Player:
                 self.image.clip_draw(self.frame*32,0,32,32,self.x,self.y,64,64)
             elif self.prior_dir=='Left':
                 self.image.clip_composite_draw(self.frame*32,0,32,32,0,'h',self.x,self.y,64,64)
+        self.hp_bar.draw(640,350,100*(self.hp/self.max_hp),10)
 
     def level_up(self):
         self.level+=1
