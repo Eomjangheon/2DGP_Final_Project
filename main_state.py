@@ -47,7 +47,8 @@ def handle_events(st):
             elif event.key==SDLK_DOWN:
                 player.dy=-2
             elif event.key==SDLK_ESCAPE:
-                pass
+                mon=monster.Bat()
+                game_world.add_object(mon,3)
         #방향키를 떼면 이전 방향을 기억하고, 뗀곳의 dx, dy조절
         elif event.type==SDL_KEYUP:
             if event.key==SDLK_RIGHT:
@@ -60,9 +61,7 @@ def handle_events(st):
                 player.dy=0
 
 def update(st):
-    mon=monster.Bat()
     
-    game_world.add_object(mon,3)
     for game_object in game_world.all_objects():
         game_object.update()
 

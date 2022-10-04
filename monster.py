@@ -16,6 +16,7 @@ class Monster:
         self.h, self.w=0,0
         self.isDie=False
         self.frame, self.frame_count=0,0
+        self.hp=0
 
     def update(self):
         self.x-=main_state.player.dx ;  self.y-=main_state.player.dy
@@ -50,14 +51,17 @@ class Monster:
     def hit(self):
         for skill in game_world.objects[4]:
             if(abs(skill.x-self.x)<(skill.w+self.w)/2 and abs(skill.y-self.y)<(skill.h+self.h)/2):
+                self.hp-=skill.damage
                 game_world.remove_object(skill)
-                self.die()
+                if(self.hp<=0):
+                    self.die()
 
 class Bat(Monster):
     move_image=None
     die_image=None
     def __init__(self):
         super().__init__()
+        self.hp=30
         self.exp=1
         self.w=19
         self.h=21

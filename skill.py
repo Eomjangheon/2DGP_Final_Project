@@ -26,7 +26,7 @@ class FireBall(Skill):
         super().__init__()
         self.lv=s_lv
         self.w,self.h=31*self.lv,16*self.lv
-        self.damage=s_lv*2
+        self.damage=s_lv*10
         self.speed=5
 
         if self.dx==0:
