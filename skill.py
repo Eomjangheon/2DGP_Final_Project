@@ -8,8 +8,12 @@ import game_world
 class Skill:
     def __init__(self):
         self.x,self.y=640,400
-        self.dx=random.randint(-100,100)/100
-        self.dy=random.randint(-100,100)/100
+        self.dx=random.randint(-100,100)
+        self.dy=random.randint(-100,100)
+        if(len(game_world.objects[3])>0):
+            self.target=random.randint(0,len(game_world.objects[3])-1)
+            self.dx=game_world.objects[3][self.target].x-640
+            self.dy=game_world.objects[3][self.target].y-400
     def update(self):
         self.x-=main_state.player.dx
         self.y-=main_state.player.dy
