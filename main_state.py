@@ -5,6 +5,7 @@ import game_world
 from main_state_ui import *
 from player import*
 import exp_jam
+import monster
 name = "mainState"
 #index, name,
 skill_name=[[0,'불의 지팡이','무작위 적을 향해 발사되며 큰 피해를 줍니다.','갯수가 1개 증가하고 강력해집니다.','크기가 커지며...','크기가 커지며...','크기가 커지며...'],
@@ -59,8 +60,9 @@ def handle_events(st):
                 player.dy=0
 
 def update(st):
-    jam=exp_jam.Exp_jam()
-    game_world.add_object(jam,2)
+    mon=monster.Bat()
+    
+    game_world.add_object(mon,3)
     for game_object in game_world.all_objects():
         game_object.update()
 
