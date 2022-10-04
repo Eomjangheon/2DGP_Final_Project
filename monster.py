@@ -44,6 +44,7 @@ class Monster:
         self.frame_count=(self.frame_count+1)%32
         self.frame=self.frame_count//8
         self.hit()
+        self.addforce()
         #if(self.x>500 and self.x<800):
             #self.die()
     
@@ -60,7 +61,18 @@ class Monster:
             self.move_image.clip_composite_draw(19*self.frame,0,19,21,0,'h',self.x,self.y,self.w,self.h)
 
     def addforce(self):
-        for mon in game_world
+        for mon in game_world.objects[3]:
+            if(mon!=self):
+                if(abs(mon.x-self.x)<(self.w) and abs(mon.y-self.y)<(self.h)):
+                    if(self.x>mon.x):
+                        self.x+=1
+                    else:
+                        self.x-=1
+
+                    if(self.y>mon.y):
+                        self.y+=1
+                    else:
+                        self.y-=1
 
     def hit(self):
         for skill in game_world.objects[4]:
