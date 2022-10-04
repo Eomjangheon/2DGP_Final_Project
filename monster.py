@@ -61,8 +61,8 @@ class Bat(Monster):
     die_image=None
     def __init__(self):
         super().__init__()
-        self.hp=30
-        self.exp=1
+        self.hp=10
+        self.exp=5
         self.w=19
         self.h=21
         if self.move_image==None:

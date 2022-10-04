@@ -1,3 +1,4 @@
+from os import remove
 from pico2d import *
 import game_framework
 import title_state
@@ -35,6 +36,8 @@ def handle_events(st):
                 level_up_state_ui.selectNum-=1
             elif event.key==SDLK_SPACE:
                 main_state.player.my_skill[level_up_state_ui.getSkill[level_up_state_ui.selectNum]]+=1
+                if(main_state.player.my_skill[level_up_state_ui.getSkill[level_up_state_ui.selectNum]]==4):
+                    level_up_state_ui.getSkill.remove(level_up_state_ui.getSkill[level_up_state_ui.selectNum])
                 game_framework.pop_state()
         
 def update(st):
