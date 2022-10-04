@@ -14,17 +14,12 @@ class Skill:
             self.target=random.randint(0,len(game_world.objects[3])-1)
             self.dx=game_world.objects[3][self.target].x-640
             self.dy=game_world.objects[3][self.target].y-400
-    def update(self):
-        self.x-=main_state.player.dx
-        self.y-=main_state.player.dy
-        self.x+=self.dx
-        self.y+=self.dy
-        if (self.x>1280 or self.x<0 or self.y<0 or self.y>800):
-            game_world.remove_object(self)
+    
 
     
     
 class FireBall(Skill):
+    name='fireball'
     image=None
     def __init__(self,s_lv):
         super().__init__()
@@ -43,8 +38,48 @@ class FireBall(Skill):
         if self.image==None:
             self.image=load_image("res/vfx/fireball.png")
             
+    def update(self):
+        self.x-=main_state.player.dx
+        self.y-=main_state.player.dy
+        self.x+=self.dx
+        self.y+=self.dy
+        if (self.x>1280 or self.x<0 or self.y<0 or self.y>800):
+            game_world.remove_object(self)
+    
     def draw(self):
         self.image.clip_composite_draw(0, 0, self.w, self.h, self.theta, '', self.x, self.y, self.w, self.h)
+
+class Whip(Skill):
+    name='whip'
+    image=None
+    def __init__(self,s_lv,num):
+        super().__init__()
+        self.lv=s_lv
+        self.w,self.h=69*3,18*2
+        self.damage=s_lv*10
+        self.frame=0
+        self.framecount=0
+        self.number=num
+        self.y-=30-30*self.number
+        if(self.number%2==0):
+            self.x+=150
+        else:
+            self.x-=150
+
+        if self.image==None:
+            self.image=load_image("res/vfx/whip.png")
+
+    def update(self):
+        self.framecount+=1
+        if(self.framecount==10):
+            game_world.remove_object(self) 
+        self.frame=self.framecount//2
+    
+    def draw(self):
+        if(self.number%2==0):
+            self.image.clip_composite_draw(69*self.frame, 0, 69, 18, 0, '', self.x, self.y, self.w, self.h)
+        else:
+            self.image.clip_composite_draw(69*self.frame, 0, 69, 18, 0, 'h', self.x, self.y, self.w, self.h)
 
 
 
