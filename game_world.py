@@ -3,6 +3,7 @@
 # layer 2: jem
 # layer 3: monster
 # layer 4: skill
+# layer 5: damage
 # layer 10: UI objects
 objects = [[],[],[],[],[],[],[],[],[],[],[]]
 def add_object(o, layer):

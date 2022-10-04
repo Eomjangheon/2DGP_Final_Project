@@ -22,6 +22,7 @@ class Player:
         #fireball
         self.my_skill=[1,0,0]
         self.timerSkill=0
+        self.timerSkill1=0
         
         if Player.image==None:
             Player.image=load_image('res/character/Antonio_Sheet.png')
@@ -34,7 +35,8 @@ class Player:
         #self.exp+=1
         self.hp-=1
 
-        self.timerSkill+=0.2
+        self.timerSkill+=0.16
+        self.timerSkill1+=0.16
         if self.exp>=self.expCoe:
             self.level_up()
         if self.my_skill[0]!=0:
@@ -42,6 +44,13 @@ class Player:
                 self.fire_ball()
                 self.timerSkill=0
 
+        if self.my_skill[1]!=0:
+            for i in range(self.my_skill[1]):
+                if abs(self.timerSkill1-0.8*(i+1))<0.1:
+                    self.whip(i)
+                    
+        if(self.timerSkill1>5):
+            self.timerSkill1=0
     
     def draw(self):
         if(self.dx == 0 and self.dy == 0):
@@ -78,6 +87,10 @@ class Player:
         for i in range(self.my_skill[0]):
             fireball=skill.FireBall(self.my_skill[0])
             game_world.add_object(fireball,4)
+
+    def whip(self,num):
+        whip=skill.Whip(self.my_skill[1],num)
+        game_world.add_object(whip,4)
 
 
 

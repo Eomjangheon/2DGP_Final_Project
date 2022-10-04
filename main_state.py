@@ -7,9 +7,10 @@ from player import*
 import exp_jam
 import monster
 name = "mainState"
+monTime=0
 #index, name,
 skill_name=[[0,'불의 지팡이','무작위 적을 향해 발사되며 큰 피해를 줍니다.','갯수가 1개 증가하고 강력해집니다.','크기가 커지며...','크기가 커지며...','크기가 커지며...'],
-            [1,'채찍','수평으로 적을 관통해 공격합니다.']]
+            [1,'채찍','수평으로 적을 관통해 공격합니다.','갯수가 1개 증가하고 강력해집니다.','갯수가 1개 증가하고 강력해집니다.','갯수가 1개 증가하고 강력해집니다.','갯수가 1개 증가하고 강력해집니다.']]
 def enter():
     mapSet=[[-1280,1280],[0,1280],[1280,1280],[-1280,0],[0,0],[1280,0],[-1280,-1280],[0,-1280],[1280,-1280]]
     global player,main_state_ui,backgrounds,gems
@@ -61,6 +62,11 @@ def handle_events(st):
                 player.dy=0
 
 def update(st):
+    global monTime
+    monTime+=0.16
+    if(len(game_world.objects[3])<100):
+        mon=monster.Bat()
+        game_world.add_object(mon,3)
     
     for game_object in game_world.all_objects():
         game_object.update()
