@@ -13,8 +13,8 @@ class Monster:
             Monster.hp_bar=load_image('res/ui/button_c8_normal.png')
         self.w,self.h=0,0
         self.rad=math.radians(random.randint(0,360))
-        self.x=640+math.cos(self.rad)*640
-        self.y=400+math.sin(self.rad)*400
+        self.x=640+math.cos(self.rad)*800
+        self.y=400+math.sin(self.rad)*600
         self.damage=0
         self.dx, self.dy, self.exp=0,0,0
         self.h, self.w=0,0
@@ -60,10 +60,10 @@ class Monster:
             self.move_image.clip_composite_draw(19*self.frame,0,19,21,0,'h',self.x,self.y,self.w,self.h)
 
     def addforce(self):
-        teX=int(self.x//40)
-        teY=int(self.y//40)
+        teX=int((self.x+160)//40)
+        teY=int((self.y+160)//40)
         for i in range(9):
-            if teY+setYpos[i]>=0 and teY+setYpos[i]<20 and teX+setXpos[i]>=0 and teX+setXpos[i]<32:
+            if teY+setYpos[i]>=0 and teY+setYpos[i]<28 and teX+setXpos[i]>=0 and teX+setXpos[i]<40:
                 for mon in main_state.objectSpaceMon[teY+setYpos[i]][teX+setXpos[i]] :
                     if(mon!=self):
                         if(abs(mon.x-self.x)<(self.w) and abs(mon.y-self.y)<(self.h)):
@@ -80,10 +80,10 @@ class Monster:
                         
 
     def hit(self):
-        teX=int(self.x//40)
-        teY=int(self.y//40)
+        teX=int((self.x+160)//40)
+        teY=int((self.y+160)//40)
         for i in range(9):
-            if teY+setYpos[i]>=0 and teY+setYpos[i]<20 and teX+setXpos[i]>=0 and teX+setXpos[i]<32:
+            if teY+setYpos[i]>=0 and teY+setYpos[i]<28 and teX+setXpos[i]>=0 and teX+setXpos[i]<40:
                 for skill in main_state.objectSpaceSkill[teY+setYpos[i]][teX+setXpos[i]] :
                     if(abs(skill.x-self.x)<(skill.w+self.w)/2 and abs(skill.y-self.y)<(skill.h+self.h)/2):
                         if(skill.name=='whip'):
