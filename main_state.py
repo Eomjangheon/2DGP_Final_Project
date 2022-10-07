@@ -38,15 +38,15 @@ def handle_events(st):
             game_framework.quit()
         elif event.type==SDL_KEYDOWN:
             if event.key==SDLK_RIGHT:
-                player.dx=2
+                player.dx=3
                 player.prior_dir='Right'
             elif event.key==SDLK_LEFT:
-                player.dx=-2
+                player.dx=-3
                 player.prior_dir='Left'
             elif event.key==SDLK_UP:
-                player.dy=2
+                player.dy=3
             elif event.key==SDLK_DOWN:
-                player.dy=-2
+                player.dy=-3
             elif event.key==SDLK_ESCAPE:
                 mon=monster.Bat()
                 game_world.add_object(mon,3)
@@ -64,7 +64,7 @@ def handle_events(st):
 def update(st):
     global monTime
     monTime+=0.16
-    if(len(game_world.objects[3])<100):
+    if(len(game_world.objects[3])<200):
         mon=monster.Bat()
         game_world.add_object(mon,3)
     

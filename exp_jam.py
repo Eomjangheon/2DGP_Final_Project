@@ -21,8 +21,8 @@ class Exp_jam:
         if(self.isEat==False):
             if self.x<640+50 and self.x>640-50 and self.y<400+50 and self.y>400-50:
                 self.eatSet()
-            #elif len(game_world.objects[1])>100:
-            #    self.eatSet()
+            elif len(game_world.objects[1])>100:
+                self.eatSet()
         else:
             self.eat()
 

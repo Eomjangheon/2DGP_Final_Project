@@ -45,8 +45,6 @@ class Monster:
         self.frame=self.frame_count//8
         self.hit()
         self.addforce()
-        #if(self.x>500 and self.x<800):
-            #self.die()
     
     def die(self):
         jam=exp_jam.Exp_jam(self.x,self.y,self.exp)
@@ -85,8 +83,8 @@ class Monster:
                             self.x+=30
                         self.hp-=skill.damage
                         self.isHitByWhip=True
-                        #damage_font=DamageFont(self.x,self.y,skill.damage)
-                        #game_world.add_object(damage_font,5)
+                        damage_font=DamageFont(self.x,self.y,skill.damage)
+                        game_world.add_object(damage_font,5)
                 else:
                     tempX=skill.x-self.x
                     tempY=skill.y-self.y
@@ -98,8 +96,8 @@ class Monster:
                     self.x-=math.cos(self.theta)*20
                     self.y-=math.sin(self.theta)*20
                     self.hp-=skill.damage
-                    #damage_font=DamageFont(self.x,self.y,skill.damage)
-                    #game_world.add_object(damage_font,5)
+                    damage_font=DamageFont(self.x,self.y,skill.damage)
+                    game_world.add_object(damage_font,5)
                     game_world.remove_object(skill)
                 if(self.hp<=0):
                     self.die()
@@ -111,7 +109,7 @@ class Bat(Monster):
         super().__init__()
         self.max_hp=50
         self.hp=50
-        self.exp=1
+        self.exp=0
         self.w=57
         self.h=63
         if self.move_image==None:
@@ -121,24 +119,31 @@ class Bat(Monster):
 
 class DamageFont():
     damage_font=None
+    png_info=[[0,170],[64,170],[128,170],[192,170],[0,85],[64,85],[128,85],[192,85],[0,0],[64,0]]
     def __init__(self,inX,inY,damage):
         if self.damage_font==None:
-            self.damage_font=load_font('res/fonts/KO.ttf',15)
+            self.damage_font=load_image("res/fonts/damage.png")
         self.fontX=inX
         self.fontY=inY
         self.timer=0
-        self.string=str(damage)
+        self.size=30
+        self.first=damage%10
+        self.second=damage//10
     
     def update(self):
         self.fontX-=main_state.player.dx
         self.fontY-=main_state.player.dy
         self.timer+=0.16
         self.fontY+=1
+        self.size-=1
         
         if(self.timer>3):
             game_world.remove_object(self)
 
     def draw(self):
-        self.damage_font.draw(self.fontX,self.fontY+15,self.string,(255,255,255))
-
+        if(self.second==0):
+            self.damage_font.clip_draw(self.png_info[self.first][0],self.png_info[self.first][1],64,85,self.fontX,self.fontY,self.size,self.size)
+        else:
+            self.damage_font.clip_draw(self.png_info[self.second][0],self.png_info[self.second][1],64,85,self.fontX-8,self.fontY,self.size,self.size)
+            self.damage_font.clip_draw(self.png_info[self.first][0],self.png_info[self.first][1],64,85,self.fontX+8,self.fontY,self.size,self.size)
 

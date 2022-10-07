@@ -20,7 +20,7 @@ class Player:
         self.max_hp=100
         self.expCoe=10
         #fireball
-        self.my_skill=[1,0,0]
+        self.my_skill=[4,4,0]
         self.timerSkill=0
         self.timerSkill1=0
         
@@ -91,8 +91,4 @@ class Player:
     def whip(self,num):
         whip=skill.Whip(self.my_skill[1],num)
         game_world.add_object(whip,4)
-
-
-
-    
 
