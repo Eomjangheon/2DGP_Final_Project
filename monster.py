@@ -4,7 +4,8 @@ import main_state
 import math
 import game_world
 import exp_jam
-
+setXpos=[-1,0,1,-1,0,1,-1,0,1]
+setYpos=[1,1,1,0,0,0,-1,-1,-1]
 class Monster:
     hp_bar=None
     def __init__(self):
@@ -59,48 +60,58 @@ class Monster:
             self.move_image.clip_composite_draw(19*self.frame,0,19,21,0,'h',self.x,self.y,self.w,self.h)
 
     def addforce(self):
-        for mon in game_world.objects[3]:
-            if(mon!=self):
-                if(abs(mon.x-self.x)<(self.w) and abs(mon.y-self.y)<(self.h)):
-                    if(self.x>mon.x):
-                        self.x+=1
-                    else:
-                        self.x-=1
+        teX=int(self.x//40)
+        teY=int(self.y//40)
+        for i in range(9):
+            if teY+setYpos[i]>=0 and teY+setYpos[i]<20 and teX+setXpos[i]>=0 and teX+setXpos[i]<32:
+                for mon in main_state.objectSpaceMon[teY+setYpos[i]][teX+setXpos[i]] :
+                    if(mon!=self):
+                        if(abs(mon.x-self.x)<(self.w) and abs(mon.y-self.y)<(self.h)):
+                            if(self.x>mon.x):
+                                self.x+=1
+                            else:
+                                self.x-=1
 
-                    if(self.y>mon.y):
-                        self.y+=1
-                    else:
-                        self.y-=1
+                            if(self.y>mon.y):
+                                self.y+=1
+                            else:
+                                self.y-=1
+                        
+                        
 
     def hit(self):
-        for skill in game_world.objects[4]:
-            if(abs(skill.x-self.x)<(skill.w+self.w)/2 and abs(skill.y-self.y)<(skill.h+self.h)/2):
-                if(skill.name=='whip'):
-                    if self.isHitByWhip==False:
-                        if(self.x<=640):
-                            self.x-=30
+        teX=int(self.x//40)
+        teY=int(self.y//40)
+        for i in range(9):
+            if teY+setYpos[i]>=0 and teY+setYpos[i]<20 and teX+setXpos[i]>=0 and teX+setXpos[i]<32:
+                for skill in main_state.objectSpaceSkill[teY+setYpos[i]][teX+setXpos[i]] :
+                    if(abs(skill.x-self.x)<(skill.w+self.w)/2 and abs(skill.y-self.y)<(skill.h+self.h)/2):
+                        if(skill.name=='whip'):
+                            if self.isHitByWhip==False:
+                                if(self.x<=640):
+                                    self.x-=30
+                                else:
+                                    self.x+=30
+                                self.hp-=skill.damage
+                                self.isHitByWhip=True
+                                damage_font=DamageFont(self.x,self.y,skill.damage)
+                                game_world.add_object(damage_font,5)
                         else:
-                            self.x+=30
-                        self.hp-=skill.damage
-                        self.isHitByWhip=True
-                        damage_font=DamageFont(self.x,self.y,skill.damage)
-                        game_world.add_object(damage_font,5)
-                else:
-                    tempX=skill.x-self.x
-                    tempY=skill.y-self.y
-                    if tempX==0:
-                        tempX=0.00000001
-                    temptheta=math.atan(tempX/tempY)
-                    if(tempX<0):
-                        temptheta+=math.pi
-                    self.x-=math.cos(self.theta)*20
-                    self.y-=math.sin(self.theta)*20
-                    self.hp-=skill.damage
-                    damage_font=DamageFont(self.x,self.y,skill.damage)
-                    game_world.add_object(damage_font,5)
-                    game_world.remove_object(skill)
-                if(self.hp<=0):
-                    self.die()
+                            tempX=skill.x-self.x
+                            tempY=skill.y-self.y
+                            if tempX==0:
+                                tempX=0.00000001
+                            temptheta=math.atan(tempX/tempY)
+                            if(tempX<0):
+                                temptheta+=math.pi
+                            self.x-=math.cos(self.theta)*20
+                            self.y-=math.sin(self.theta)*20
+                            self.hp-=skill.damage
+                            damage_font=DamageFont(self.x,self.y,skill.damage)
+                            game_world.add_object(damage_font,5)
+                            game_world.remove_object(skill)
+                        if(self.hp<=0):
+                            self.die()
 
 class Bat(Monster):
     move_image=None
