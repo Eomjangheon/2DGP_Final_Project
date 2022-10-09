@@ -55,13 +55,17 @@ def handle_events(st):
         #방향키를 떼면 이전 방향을 기억하고, 뗀곳의 dx, dy조절
         elif event.type==SDL_KEYUP:
             if event.key==SDLK_RIGHT:
-                player.dx=0
+                if(player.dx>0):
+                    player.dx=0
             elif event.key==SDLK_LEFT:
-                player.dx=0
+                if(player.dx<0):
+                    player.dx=0
             elif event.key==SDLK_UP:
-                player.dy=0
+                if(player.dy>0):
+                    player.dy=0
             elif event.key==SDLK_DOWN:
-                player.dy=0
+                if(player.dy<0):
+                    player.dy=0
 
 def update(st):
     global monTime

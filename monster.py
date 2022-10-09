@@ -21,43 +21,59 @@ class Monster:
         self.isDie=False
         self.isHitByWhip=False
         self.frame, self.frame_count=0,0
+        self.dieFrame=0
         self.hp=0
         self.max_hp=0
         self.isHitByWhipTimer=0
 
     def update(self):
         self.x-=main_state.player.dx ;  self.y-=main_state.player.dy
-        self.dx=640-self.x;             self.dy=400-self.y
-        if self.dx==0:
-            self.dx=0.00000001
-        self.theta=math.atan(self.dy/self.dx)
-        if(self.dx<0):
-            self.theta+=math.pi
-        self.dx=math.cos(self.theta)*1
-        self.dy=math.sin(self.theta)*1
-        if(self.isHitByWhip):
-            self.isHitByWhipTimer+=0.16
-        if(self.isHitByWhipTimer>3):
-            self.isHitByWhip=False
-            self.isHitByWhipTimer=0
-        self.x+=self.dx
-        self.y+=self.dy
-        self.frame_count=(self.frame_count+1)%32
-        self.frame=self.frame_count//8
-        self.hit()
-        self.addforce()
+        if(self.isDie==False):    
+            self.dx=640-self.x;             self.dy=400-self.y
+            if self.dx==0:
+                self.dx=0.00000001
+            self.theta=math.atan(self.dy/self.dx)
+            if(self.dx<0):
+                self.theta+=math.pi
+            self.dx=math.cos(self.theta)*1
+            self.dy=math.sin(self.theta)*1
+            if(self.isHitByWhip):
+                self.isHitByWhipTimer+=0.16
+            if(self.isHitByWhipTimer>3):
+                self.isHitByWhip=False
+                self.isHitByWhipTimer=0
+            self.x+=self.dx
+            self.y+=self.dy
+            self.frame_count=(self.frame_count+1)%32
+            self.frame=self.frame_count//8
+            self.hit()
+            self.addforce()
+        if(self.isDie==True):
+            self.dieFrame+=1
+            self.die()
+            
+
     
     def die(self):
-        jam=exp_jam.Exp_jam(self.x,self.y,self.exp)
-        game_world.add_object(jam,2)
-        game_world.remove_object(self)
+        
+        
+        if self.dieFrame==30:
+            jam=exp_jam.Exp_jam(self.x,self.y,self.exp)
+            game_world.add_object(jam,2)
+            game_world.remove_object(self)
 
     def draw(self):
-        self.hp_bar.draw(self.x,self.y-20,30*(self.hp/self.max_hp),5)
-        if(self.dx<0):
-            self.move_image.clip_composite_draw(19*self.frame, 0, 19, 21, 0, '', self.x, self.y, self.w, self.h)
+        if self.isDie==False:
+            self.hp_bar.draw(self.x,self.y-20,30*(self.hp/self.max_hp),5)
+            if(self.dx<0):
+                self.move_image.clip_composite_draw(19*self.frame, 0, 19, 21, 0, '', self.x, self.y, self.w, self.h)
+            else:
+                self.move_image.clip_composite_draw(19*self.frame,0,19,21,0,'h',self.x,self.y,self.w,self.h)
         else:
-            self.move_image.clip_composite_draw(19*self.frame,0,19,21,0,'h',self.x,self.y,self.w,self.h)
+            if(self.dx<0):
+                self.die_image.clip_composite_draw(55*self.dieFrame, 0, 55, 36, 0, '', self.x, self.y, self.w, self.h)
+            else:
+                self.die_image.clip_composite_draw(55*self.dieFrame,0,55,36,0,'h',self.x,self.y,self.w,self.h)
 
     def addforce(self):
         teX=int((self.x+320)//80)
@@ -76,8 +92,6 @@ class Monster:
                                 self.y+=1
                             else:
                                 self.y-=1
-                        
-                        
 
     def hit(self):
         teX=int((self.x+320)//80)
@@ -111,6 +125,7 @@ class Monster:
                             game_world.add_object(damage_font,5)
                             game_world.remove_object(skill)
                         if(self.hp<=0):
+                            self.isDie=True
                             self.die()
 
 class Bat(Monster):
