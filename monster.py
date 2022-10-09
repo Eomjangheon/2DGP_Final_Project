@@ -60,10 +60,10 @@ class Monster:
             self.move_image.clip_composite_draw(19*self.frame,0,19,21,0,'h',self.x,self.y,self.w,self.h)
 
     def addforce(self):
-        teX=int((self.x+160)//40)
-        teY=int((self.y+160)//40)
+        teX=int((self.x+320)//80)
+        teY=int((self.y+320)//80)
         for i in range(9):
-            if teY+setYpos[i]>=0 and teY+setYpos[i]<28 and teX+setXpos[i]>=0 and teX+setXpos[i]<40:
+            if teY+setYpos[i]>=0 and teY+setYpos[i]<18 and teX+setXpos[i]>=0 and teX+setXpos[i]<24:
                 for mon in main_state.objectSpaceMon[teY+setYpos[i]][teX+setXpos[i]] :
                     if(mon!=self):
                         if(abs(mon.x-self.x)<(self.w) and abs(mon.y-self.y)<(self.h)):
@@ -80,10 +80,10 @@ class Monster:
                         
 
     def hit(self):
-        teX=int((self.x+160)//40)
-        teY=int((self.y+160)//40)
+        teX=int((self.x+320)//80)
+        teY=int((self.y+320)//80)
         for i in range(9):
-            if teY+setYpos[i]>=0 and teY+setYpos[i]<28 and teX+setXpos[i]>=0 and teX+setXpos[i]<40:
+            if teY+setYpos[i]>=0 and teY+setYpos[i]<18 and teX+setXpos[i]>=0 and teX+setXpos[i]<24:
                 for skill in main_state.objectSpaceSkill[teY+setYpos[i]][teX+setXpos[i]] :
                     if(abs(skill.x-self.x)<(skill.w+self.w)/2 and abs(skill.y-self.y)<(skill.h+self.h)/2):
                         if(skill.name=='whip'):

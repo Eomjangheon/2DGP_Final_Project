@@ -8,8 +8,8 @@ import exp_jam
 import monster
 name = "mainState"
 monTime=0
-objectSpaceMon=[[[] for i in range (40)] for i in range(28)] 
-objectSpaceSkill=[[[] for i in range (40)] for i in range(28)] 
+objectSpaceMon=[[[] for i in range (24)] for i in range(18)] 
+objectSpaceSkill=[[[] for i in range (24)] for i in range(18)] 
 #index, name,
 skill_name=[[0,'불의 지팡이','무작위 적을 향해 발사되며 큰 피해를 줍니다.','갯수가 1개 증가하고 강력해집니다.','크기가 커지며...','크기가 커지며...','크기가 커지며...'],
             [1,'채찍','수평으로 적을 관통해 공격합니다.','갯수가 1개 증가하고 강력해집니다.','갯수가 1개 증가하고 강력해집니다.','갯수가 1개 증가하고 강력해집니다.','갯수가 1개 증가하고 강력해집니다.']]
@@ -72,18 +72,18 @@ def update(st):
         mon=monster.Bat()
         game_world.add_object(mon,3)
     
-    objectSpaceMon=[[[] for i in range (40)] for i in range(28)] 
-    objectSpaceSkill=[[[] for i in range (40)] for i in range(28)] 
+    objectSpaceMon=[[[] for k in range (24)] for i in range(18)] 
+    objectSpaceSkill=[[[] for k in range (24)] for i in range(18)] 
     for mon in game_world.objects[3]:
-        teY=int((mon.y+160)//40)
-        teX=int((mon.x+160)//40)
-        if(mon.x<1280+160 and mon.x>=-160 and mon.y<800+160 and mon.y>=-160):
+        teY=int((mon.y+320)//80)
+        teX=int((mon.x+320)//80)
+        if(mon.x<1280+320 and mon.x>=-320 and mon.y<800+320 and mon.y>=-320):
             objectSpaceMon[teY][teX].append(mon)
 
     for skill in game_world.objects[4]:
-        teY=int((skill.y+160)//40)
-        teX=int((skill.x+160)//40)
-        if(skill.x<1280+160 and skill.x>=-160 and skill.y<800+160 and skill.y>=-160):
+        teY=int((skill.y+320)//80)
+        teX=int((skill.x+320)//80)
+        if(skill.x<1280+320 and skill.x>=-320 and skill.y<800+320 and skill.y>=-320):
             objectSpaceSkill[teY][teX].append(skill)        
 
     for game_object in game_world.all_objects():
