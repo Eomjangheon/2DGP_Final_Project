@@ -12,8 +12,8 @@ class Level_up_state_ui:
     skill_frame=None
     arrow=None
     item_frame=None
-    skill_img=[None for i in range(3)]
-    getSkill=[i for i in range(3)]
+    skill_img=[None for i in range(4)]
+    getSkill=[i for i in range(4)]
 
     def __init__(self):
         if self.level_up_font==None:
@@ -36,6 +36,8 @@ class Level_up_state_ui:
             self.skill_img[1]=load_image('res/ui/Whip.png')
         if self.skill_img[2]==None:
             self.skill_img[2]=load_image('res/ui/OrbGlow.png')
+        if self.skill_img[3]==None:
+            self.skill_img[3]=load_image('res/ui/Leaf.png')
         self.selectNum=0
         
 
@@ -50,8 +52,11 @@ class Level_up_state_ui:
         for i in range(3):
             self.skill_frame.draw(640,500-150*i,500,120)
             self.item_frame.draw(460,520-150*i,50,50)
-
-        for i in range((len(self.getSkill))%4):
+        if len(self.getSkill)<3:
+            num=len(self.getSkill)
+        else:
+            num=3
+        for i in range(num):
             self.skill_img[self.getSkill[i]].draw(460,520-150*i,40,40)
             self.description_font.draw(500,520-150*i,main_state.skill_name[self.getSkill[i]][1],(255,255,255))
             self.description_font2.draw(450,470-150*i,main_state.skill_name[self.getSkill[i]][2+main_state.player.my_skill[self.getSkill[i]]],(255,255,255))
