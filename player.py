@@ -17,8 +17,8 @@ class Player:
         self.frame_count=0
         self.level=1
         self.exp=0
-        self.hp=500
-        self.max_hp=500
+        self.hp=200
+        self.max_hp=200
         self.expCoe=10
         self.hitTimer=0
         self.grabDis=50

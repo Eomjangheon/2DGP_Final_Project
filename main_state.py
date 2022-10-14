@@ -38,10 +38,8 @@ def enter():
 
 
 def exit():
-    global player
-    del(player)
-    game_world.clear()
-    
+    player=None
+    game_world.objects=[[],[],[],[],[],[],[],[],[],[],[]]
 
 
 
@@ -122,8 +120,10 @@ def draw():
     delay(0.016)
 
 def die():
+    global player
     if player.hp<=0:
         game_framework.change_state(start_state)
+        
 
 def pause(): pass
 def resume(): pass
