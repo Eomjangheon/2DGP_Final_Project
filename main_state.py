@@ -11,6 +11,7 @@ name = "mainState"
 monTime=0
 objectSpaceMon=[[[] for i in range (24)] for i in range(18)] 
 objectSpaceSkill=[[[] for i in range (24)] for i in range(18)]
+#현재는 스킬들의 텍스트를 여기서 관리하지만 나중에 파일입출력 예정
 #index, name,
 skill_name=[[0,'불의 지팡이','무작위 적을 향해 발사되며 큰 피해를 줍니다.','갯수가 1개 증가하고 강력해집니다.','크기가 커지며...','크기가 커지며...','크기가 커지며...'],
             [1,'채찍','수평으로 적을 관통해 공격합니다.','갯수가 1개 증가하고 강력해집니다.','갯수가 1개 증가하고 강력해집니다.','갯수가 1개 증가하고 강력해집니다.','갯수가 1개 증가하고 강력해집니다.'],
@@ -19,9 +20,9 @@ skill_name=[[0,'불의 지팡이','무작위 적을 향해 발사되며 큰 피�
             ]
 def enter():
     print("main")
+    level_up_state.Level_up_state_ui.getSkill=[i for i in range(4)]
     mapSet=[[-1280,1280],[0,1280],[1280,1280],[-1280,0],[0,0],[1280,0],[-1280,-1280],[0,-1280],[1280,-1280]]
     global player,main_state_ui,backgrounds,objectSpaceMon,objectSpaceSkill
-
     objectSpaceMon=[[[] for i in range (24)] for i in range(18)] 
     objectSpaceSkill=[[[] for i in range (24)] for i in range(18)]
     player=None

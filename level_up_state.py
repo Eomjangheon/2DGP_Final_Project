@@ -11,7 +11,7 @@ name = "levelUpState"
 #레벨업시 잠시 들어오는 state이다.
 #여기서 스킬 레벨을 올릴수있다.
 def enter():
-    global level_up_state_ui
+    global level_up_state_ui,isRestart
     level_up_state_ui=Level_up_state_ui()
     random.shuffle(level_up_state_ui.getSkill)
     print(main_state.player.my_skill)
