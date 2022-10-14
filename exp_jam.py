@@ -18,8 +18,9 @@ class Exp_jam:
     def update(self):
         self.x-=main_state.player.dx
         self.y-=main_state.player.dy
+        grabDistan=main_state.player.grabDis+main_state.player.my_skill[2]*20
         if(self.isEat==False):
-            if self.x<640+50 and self.x>640-50 and self.y<400+50 and self.y>400-50:
+            if self.x<640+grabDistan and self.x>640-grabDistan and self.y<400+grabDistan and self.y>400-grabDistan:
                 self.eatSet()
             elif len(game_world.objects[1])>100:
                 self.eatSet()

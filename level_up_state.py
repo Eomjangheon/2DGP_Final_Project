@@ -12,7 +12,7 @@ def enter():
     global level_up_state_ui
     level_up_state_ui=Level_up_state_ui()
     random.shuffle(level_up_state_ui.getSkill)
-    
+    print(main_state.player.my_skill)
     pass
 
 def exit():

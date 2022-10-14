@@ -21,8 +21,9 @@ class Player:
         self.max_hp=100
         self.expCoe=10
         self.hitTimer=0
+        self.grabDis=50
         #fireball
-        self.my_skill=[1,0,0]
+        self.my_skill=[3,3,3]
         self.timerSkill=0
         self.timerSkill1=0
         
