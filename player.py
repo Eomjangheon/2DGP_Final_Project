@@ -17,13 +17,13 @@ class Player:
         self.frame_count=0
         self.level=1
         self.exp=0
-        self.hp=100
-        self.max_hp=100
+        self.hp=500
+        self.max_hp=500
         self.expCoe=10
         self.hitTimer=0
         self.grabDis=50
         #fireball
-        self.my_skill=[3,3,3,0]
+        self.my_skill=[3,3,3,3]
         self.timerSkill=0
         self.timerSkill1=0
         
@@ -36,7 +36,7 @@ class Player:
         self.frame_count=(self.frame_count+1)%32
         self.frame=self.frame_count//8
         #self.exp+=1
-        #self.hp-=1
+        self.hp-=1
 
         self.timerSkill+=0.16
         self.timerSkill1+=0.16
@@ -55,7 +55,6 @@ class Player:
         if(self.timerSkill1>5):
             self.timerSkill1=0
         self.hit()
-        self.die()
     
     def draw(self):
         if(self.dx == 0 and self.dy == 0):
@@ -88,9 +87,8 @@ class Player:
         main_state.draw()
         game_framework.push_state(level_up_state)
 
-    def die(self):
-        if self.hp<=0:
-            main_state.playerdie()
+
+
 
     def hit(self):
         if(self.hitTimer==0):

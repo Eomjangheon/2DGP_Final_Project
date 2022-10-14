@@ -20,7 +20,10 @@ skill_name=[[0,'불의 지팡이','무작위 적을 향해 발사되며 큰 피�
 def enter():
     print("main")
     mapSet=[[-1280,1280],[0,1280],[1280,1280],[-1280,0],[0,0],[1280,0],[-1280,-1280],[0,-1280],[1280,-1280]]
-    global player,main_state_ui,backgrounds
+    global player,main_state_ui,backgrounds,objectSpaceMon,objectSpaceSkill
+
+    objectSpaceMon=[[[] for i in range (24)] for i in range(18)] 
+    objectSpaceSkill=[[[] for i in range (24)] for i in range(18)]
     player=None
     player=Player()
     main_state_ui=Main_state_ui()
@@ -36,11 +39,11 @@ def enter():
 
 def exit():
     global player
+    del(player)
     game_world.clear()
     
 
-def playerdie():
-    game_framework.change_state(start_state)
+
 
 def handle_events():
     global player
@@ -105,6 +108,10 @@ def update():
 
     for game_object in game_world.all_objects():
         game_object.update()
+    
+    die()
+
+
 
 def draw():
     global player
@@ -113,6 +120,10 @@ def draw():
         game_object.draw()
     update_canvas()
     delay(0.016)
+
+def die():
+    if player.hp<=0:
+        game_framework.change_state(start_state)
 
 def pause(): pass
 def resume(): pass
