@@ -56,7 +56,7 @@ class Monster:
     
     def die(self):
         
-        
+
         if self.dieFrame==30:
             jam=exp_jam.Exp_jam(self.x,self.y,self.exp)
             game_world.add_object(jam,2)
@@ -134,10 +134,11 @@ class Bat(Monster):
     def __init__(self):
         super().__init__()
         self.max_hp=50
-        self.hp=50
-        self.exp=0
+        self.hp=10
+        self.exp=1
         self.w=57
         self.h=63
+        self.damage=3
         if self.move_image==None:
             self.move_image=load_image("res/monster/Bat1_move.png")
         if self.die_image==None:

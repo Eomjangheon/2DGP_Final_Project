@@ -21,7 +21,7 @@ def exit():
     pass
 
 
-def handle_events(st):
+def handle_events():
     global level_up_state_ui
     events = get_events()
     for event in events:
@@ -40,10 +40,10 @@ def handle_events(st):
                     level_up_state_ui.getSkill.remove(level_up_state_ui.getSkill[level_up_state_ui.selectNum])
                 game_framework.pop_state()
         
-def update(st):
+def update():
     pass
 
-def draw(st):
+def draw():
     global level_up_state_ui
     clear_canvas()
     for i in range(9):

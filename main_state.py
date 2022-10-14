@@ -6,16 +6,19 @@ from main_state_ui import *
 from player import*
 import exp_jam
 import monster
+player=None
 name = "mainState"
 monTime=0
 objectSpaceMon=[[[] for i in range (24)] for i in range(18)] 
-objectSpaceSkill=[[[] for i in range (24)] for i in range(18)] 
+objectSpaceSkill=[[[] for i in range (24)] for i in range(18)]
 #index, name,
 skill_name=[[0,'불의 지팡이','무작위 적을 향해 발사되며 큰 피해를 줍니다.','갯수가 1개 증가하고 강력해집니다.','크기가 커지며...','크기가 커지며...','크기가 커지며...'],
             [1,'채찍','수평으로 적을 관통해 공격합니다.','갯수가 1개 증가하고 강력해집니다.','갯수가 1개 증가하고 강력해집니다.','갯수가 1개 증가하고 강력해집니다.','갯수가 1개 증가하고 강력해집니다.']]
 def enter():
+    print("main")
     mapSet=[[-1280,1280],[0,1280],[1280,1280],[-1280,0],[0,0],[1280,0],[-1280,-1280],[0,-1280],[1280,-1280]]
-    global player,main_state_ui,backgrounds,gems
+    global player,main_state_ui,backgrounds
+    player=None
     player=Player()
     main_state_ui=Main_state_ui()
     backgrounds=[Background() for i in range(9)]
@@ -29,10 +32,14 @@ def enter():
 
 
 def exit():
+    global player
     game_world.clear()
+    
 
+def playerdie():
+    game_framework.change_state(start_state)
 
-def handle_events(st):
+def handle_events():
     global player
     events = get_events()
     for event in events:
@@ -67,7 +74,8 @@ def handle_events(st):
                 if(player.dy<0):
                     player.dy=0
 
-def update(st):
+def update():
+    global player
     global monTime
     global objectSpaceMon
     global objectSpaceSkill
@@ -93,7 +101,8 @@ def update(st):
     for game_object in game_world.all_objects():
         game_object.update()
 
-def draw(st):
+def draw():
+    global player
     clear_canvas()
     for game_object in game_world.all_objects():
         game_object.draw()

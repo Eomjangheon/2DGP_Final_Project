@@ -4,6 +4,7 @@ import game_framework
 import main_state
 import skill
 import game_world
+import start_state
 
 class Player:
     image = None
@@ -19,8 +20,9 @@ class Player:
         self.hp=100
         self.max_hp=100
         self.expCoe=10
+        self.hitTimer=0
         #fireball
-        self.my_skill=[4,4,0]
+        self.my_skill=[1,0,0]
         self.timerSkill=0
         self.timerSkill1=0
         
@@ -33,7 +35,7 @@ class Player:
         self.frame_count=(self.frame_count+1)%32
         self.frame=self.frame_count//8
         #self.exp+=1
-        self.hp-=1
+        #self.hp-=1
 
         self.timerSkill+=0.16
         self.timerSkill1+=0.16
@@ -51,6 +53,8 @@ class Player:
                     
         if(self.timerSkill1>5):
             self.timerSkill1=0
+        self.hit()
+        self.die()
     
     def draw(self):
         if(self.dx == 0 and self.dy == 0):
@@ -80,8 +84,27 @@ class Player:
         self.dx=0
         self.dy=0
         
-        main_state.draw(1)
+        main_state.draw()
         game_framework.push_state(level_up_state)
+
+    def die(self):
+        if self.hp<=0:
+            main_state.playerdie()
+
+    def hit(self):
+        if(self.hitTimer==0):
+            for i in range(8,10+1):
+                for j in range(11,13+1):
+                    for mon in main_state.objectSpaceMon[i][j]:
+                        if(abs(mon.x-640)<16+mon.w and abs(mon.y-400)<16+mon.h):
+                            self.hp-=mon.damage
+                            self.hitTimer+=1
+                            print(self.hp)
+                            return
+        else:
+            self.hitTimer=(self.hitTimer+1)%10
+            
+                
 
     def fire_ball(self):
         for i in range(self.my_skill[0]):
@@ -92,3 +115,4 @@ class Player:
         whip=skill.Whip(self.my_skill[1],num)
         game_world.add_object(whip,4)
 
+    

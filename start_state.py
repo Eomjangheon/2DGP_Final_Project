@@ -3,13 +3,15 @@ import game_framework
 import title_state
 import main_state
 name = "StartState"
-image = []
+
 
 start_font=None
 font_time=0.0
 
 def enter():
+    print('here')
     global image, start_font
+    image = []
     image.append(load_image('res/start_img/introBG.png'))
     image.append(load_image('res/start_img/antonio.png'))
     image.append(load_image('res/start_img/imelda.png'))
@@ -21,13 +23,13 @@ def exit():
     del(image)
     del(start_font)
 
-def update(a):
+def update():
     global font_time
     delay(0.01)
     font_time = (font_time+0.01)%2
 
 
-def draw(a):
+def draw():
     global image,start_font,font_time
     clear_canvas()
     image[0].draw(640, 400,1280,800)
@@ -39,10 +41,11 @@ def draw(a):
         start_font.draw(340,70,"press Space Bar to start",(255,255,255))
     update_canvas()
 
-def handle_events(a):
+def handle_events():
     events = get_events()
     for event in events:
         if event.type==SDL_QUIT:
             game_framework.quit()
         elif event.type==SDL_KEYDOWN and event.key==SDLK_SPACE:
+            print('here?')
             game_framework.change_state(main_state)
