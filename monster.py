@@ -24,6 +24,10 @@ class Monster:
         self.dieFrame=0
         self.hp=0
         self.max_hp=0
+        self.picMoveW=0
+        self.picMoveH=0
+        self.picDieW=0
+        self.picDieH=0
         self.isHitByWhipTimer=0
 
     def update(self):
@@ -66,14 +70,14 @@ class Monster:
         if self.isDie==False:
             self.hp_bar.draw(self.x,self.y-20,30*(self.hp/self.max_hp),5)
             if(self.dx<0):
-                self.move_image.clip_composite_draw(19*self.frame, 0, 19, 21, 0, '', self.x, self.y, self.w, self.h)
+                self.move_image.clip_composite_draw(self.picMoveW*self.frame, 0, self.picMoveW, self.picMoveH, 0, '', self.x, self.y, self.w, self.h)
             else:
-                self.move_image.clip_composite_draw(19*self.frame,0,19,21,0,'h',self.x,self.y,self.w,self.h)
+                self.move_image.clip_composite_draw(self.picMoveW*self.frame,0,self.picMoveW,self.picMoveH,0,'h',self.x,self.y,self.w,self.h)
         else:
             if(self.dx<0):
-                self.die_image.clip_composite_draw(55*self.dieFrame, 0, 55, 36, 0, '', self.x, self.y, self.w, self.h)
+                self.die_image.clip_composite_draw(self.picDieW*self.dieFrame, 0, self.picDieW, self.picDieH, 0, '', self.x, self.y, self.w, self.h)
             else:
-                self.die_image.clip_composite_draw(55*self.dieFrame,0,55,36,0,'h',self.x,self.y,self.w,self.h)
+                self.die_image.clip_composite_draw(self.picDieW*self.dieFrame,0,self.picDieW,self.picDieH,0,'h',self.x,self.y,self.w,self.h)
 
     def addforce(self):
         teX=int((self.x+320)//80)
@@ -133,9 +137,13 @@ class Bat(Monster):
     die_image=None
     def __init__(self):
         super().__init__()
-        self.max_hp=50
+        self.max_hp=10
         self.hp=10
         self.exp=1
+        self.picMoveW=19
+        self.picMoveH=21
+        self.picDieW=55
+        self.picDieH=36
         self.w=57
         self.h=63
         self.damage=3
@@ -143,6 +151,26 @@ class Bat(Monster):
             self.move_image=load_image("res/monster/Bat1_move.png")
         if self.die_image==None:
             self.die_image=load_image("res/monster/Bat1_die.png")
+
+class Armor(Monster):
+    move_image=None
+    die_image=None
+    def __init__(self):
+        super().__init__()
+        self.max_hp=20
+        self.hp=20
+        self.exp=2
+        self.picMoveW=38
+        self.picMoveH=36
+        self.picDieW=54
+        self.picDieH=34
+        self.w=76
+        self.h=72
+        self.damage=5
+        if self.move_image==None:
+            self.move_image=load_image("res/monster/Armor1_move.png")
+        if self.die_image==None:
+            self.die_image=load_image("res/monster/Armor1_die.png")
 
 class DamageFont():
     damage_font=None

@@ -86,6 +86,8 @@ def update():
     if(len(game_world.objects[3])<300):
         mon=monster.Bat()
         game_world.add_object(mon,3)
+        mon=monster.Armor()
+        game_world.add_object(mon,3)
     
     objectSpaceMon=[[[] for k in range (24)] for i in range(18)] 
     objectSpaceSkill=[[[] for k in range (24)] for i in range(18)] 
