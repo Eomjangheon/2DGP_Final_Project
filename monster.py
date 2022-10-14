@@ -73,7 +73,7 @@ class Monster:
 
     def draw(self):
         if self.isDie==False:
-            self.hp_bar.draw(self.x,self.y-20,30*(self.hp/self.max_hp),5)
+            #self.hp_bar.draw(self.x,self.y-20,30*(self.hp/self.max_hp),5)
             if(self.dx<0):
                 self.move_image.clip_composite_draw(self.picMoveW*self.frame, 0, self.picMoveW, self.picMoveH, 0, '', self.x, self.y, self.w, self.h)
             else:
@@ -93,7 +93,7 @@ class Monster:
             if teY+setYpos[i]>=0 and teY+setYpos[i]<18 and teX+setXpos[i]>=0 and teX+setXpos[i]<24:
                 for mon in main_state.objectSpaceMon[teY+setYpos[i]][teX+setXpos[i]] :
                     if(mon!=self):
-                        if(abs(mon.x-self.x)<(self.w) and abs(mon.y-self.y)<(self.h)):
+                        if(abs(mon.x-self.x)<(self.w) and abs(mon.y-self.y)<(self.h) and mon.isDie==False):
                             if(self.x>mon.x):
                                 self.x+=1
                             else:
