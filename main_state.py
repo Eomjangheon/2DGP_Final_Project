@@ -38,7 +38,7 @@ def enter():
 
 
 def exit():
-    player=None
+    #스테이트를 나갈때 게임월드를 초기화
     game_world.objects=[[],[],[],[],[],[],[],[],[],[],[]]
 
 
@@ -84,20 +84,23 @@ def update():
     global objectSpaceMon
     global objectSpaceSkill
     monTime+=0.16
+    #최대 몬스터 제한
     if(len(game_world.objects[3])<300):
         mon=monster.Bat()
         game_world.add_object(mon,3)
         mon=monster.Armor()
         game_world.add_object(mon,3)
     
+    #공간분할 총 24*18칸
     objectSpaceMon=[[[] for k in range (24)] for i in range(18)] 
     objectSpaceSkill=[[[] for k in range (24)] for i in range(18)] 
+    #몬스터 공간에 몬스터 삽입
     for mon in game_world.objects[3]:
         teY=int((mon.y+320)//80)
         teX=int((mon.x+320)//80)
         if(mon.x<1280+320 and mon.x>=-320 and mon.y<800+320 and mon.y>=-320):
             objectSpaceMon[teY][teX].append(mon)
-
+    #스킬 공간에 스킬 삽입
     for skill in game_world.objects[4]:
         teY=int((skill.y+320)//80)
         teX=int((skill.x+320)//80)
@@ -109,7 +112,10 @@ def update():
     
     die()
 
-
+#level_up_state를 위한 그리기 함수
+def drawWorld():
+    for game_object in game_world.all_objects():
+        game_object.draw()
 
 def draw():
     global player
@@ -119,6 +125,7 @@ def draw():
     update_canvas()
     delay(0.016)
 
+#캐릭터가 죽을경우 state변환
 def die():
     global player
     if player.hp<=0:

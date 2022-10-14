@@ -1,7 +1,7 @@
 from pico2d import*
 from player import*
 import main_state
-
+#main_state의 UI객체
 class Main_state_ui:
     level_font=None
     exp_box=None

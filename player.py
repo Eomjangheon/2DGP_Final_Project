@@ -36,7 +36,7 @@ class Player:
         self.frame_count=(self.frame_count+1)%32
         self.frame=self.frame_count//8
         #self.exp+=1
-        self.hp-=1
+        #self.hp-=1
 
         self.timerSkill+=0.16
         self.timerSkill1+=0.16
@@ -89,7 +89,7 @@ class Player:
 
 
 
-
+    #몬스터에게 닿았을때
     def hit(self):
         if(self.hitTimer==0):
             for i in range(8,10+1):
@@ -104,12 +104,12 @@ class Player:
             self.hitTimer=(self.hitTimer+1)%10
             
                 
-
+    #화염구 스킬
     def fire_ball(self):
         for i in range(self.my_skill[0]):
             fireball=skill.FireBall(self.my_skill[0])
             game_world.add_object(fireball,4)
-
+    #채찍스킬
     def whip(self,num):
         whip=skill.Whip(self.my_skill[1],num)
         game_world.add_object(whip,4)

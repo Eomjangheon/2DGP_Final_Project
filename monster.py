@@ -6,6 +6,8 @@ import game_world
 import exp_jam
 setXpos=[-1,0,1,-1,0,1,-1,0,1]
 setYpos=[1,1,1,0,0,0,-1,-1,-1]
+#모든 몬스터 종류의 부모 클래스
+#몬스터별로 공통된 부분을 담고있다.
 class Monster:
     hp_bar=None
     def __init__(self):
@@ -24,23 +26,26 @@ class Monster:
         self.dieFrame=0
         self.hp=0
         self.max_hp=0
-        self.picMoveW=0
-        self.picMoveH=0
-        self.picDieW=0
-        self.picDieH=0
+        self.picMoveW,self.picMoveH,self.picDieW,self.picDieH=0,0,0,0
         self.isHitByWhipTimer=0
 
     def update(self):
+        #캐릭터의 이동만큼 반대로 이동
         self.x-=main_state.player.dx ;  self.y-=main_state.player.dy
-        if(self.isDie==False):    
+        #살아있는 상태라면
+        if(self.isDie==False):
+            #캐릭터를 향해 걷는 방향벡터를 구한다.    
             self.dx=640-self.x;             self.dy=400-self.y
             if self.dx==0:
                 self.dx=0.00000001
+            #속도의 정규화를 위해 각도를 구한다.
             self.theta=math.atan(self.dy/self.dx)
             if(self.dx<0):
                 self.theta+=math.pi
+            #삼각함수로 속도를 정규화한다.
             self.dx=math.cos(self.theta)*1
             self.dy=math.sin(self.theta)*1
+            #사라지지 않는 채찍을 위한 타이머
             if(self.isHitByWhip):
                 self.isHitByWhipTimer+=0.16
             if(self.isHitByWhipTimer>3):
@@ -48,6 +53,7 @@ class Monster:
                 self.isHitByWhipTimer=0
             self.x+=self.dx
             self.y+=self.dy
+            #애니메이션의 자연스러움을 위한 연산
             self.frame_count=(self.frame_count+1)%32
             self.frame=self.frame_count//8
             self.hit()
@@ -57,13 +63,12 @@ class Monster:
             self.die()
             
 
-    
+    #죽자마자 경험치를 뱉고, 죽는 애니메이션 재생
     def die(self):
-        
-
-        if self.dieFrame==30:
+        if self.dieFrame==1:
             jam=exp_jam.Exp_jam(self.x,self.y,self.exp)
             game_world.add_object(jam,2)
+        if self.dieFrame==30:
             game_world.remove_object(self)
 
     def draw(self):
@@ -79,6 +84,8 @@ class Monster:
             else:
                 self.die_image.clip_composite_draw(self.picDieW*self.dieFrame,0,self.picDieW,self.picDieH,0,'h',self.x,self.y,self.w,self.h)
 
+    #몬스터끼리 겹치지 않게 서로 밀어낸다.
+    #공간분할을 통해 프레임드랍을 줄였다.
     def addforce(self):
         teX=int((self.x+320)//80)
         teY=int((self.y+320)//80)
@@ -132,6 +139,7 @@ class Monster:
                             self.isDie=True
                             self.die()
 
+#모든 몬스터 종류는 Monster를 상속받는다.
 class Bat(Monster):
     move_image=None
     die_image=None
@@ -162,7 +170,7 @@ class Armor(Monster):
         self.exp=2
         self.picMoveW=38
         self.picMoveH=36
-        self.picDieW=54
+        self.picDieW=36
         self.picDieH=34
         self.w=76
         self.h=72
