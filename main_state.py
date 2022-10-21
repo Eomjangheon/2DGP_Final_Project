@@ -19,7 +19,9 @@ skill_name=[[0,'불의 지팡이','무작위 적을 향해 발사되며 큰 피�
             [3,'시금치','모든 공격의 데미지가 2증가합니다.','모든 공격의 데미지가 4증가합니다.','모든 공격의 데미지가 6증가합니다.','모든 공격의 데미지가 8증가합니다.','모든 공격의 데미지가 10증가합니다.',]
             ]
 def enter():
+    global bgm
     print("main")
+    
     level_up_state.Level_up_state_ui.getSkill=[i for i in range(4)]
     mapSet=[[-1280,1280],[0,1280],[1280,1280],[-1280,0],[0,0],[1280,0],[-1280,-1280],[0,-1280],[1280,-1280]]
     global player,main_state_ui,backgrounds,objectSpaceMon,objectSpaceSkill
@@ -35,11 +37,15 @@ def enter():
     game_world.add_objects(backgrounds,0)
     game_world.add_object(player,1)
     game_world.add_object(main_state_ui,10)
-    
+    bgm=load_music('res/sound/ma.ogg')
+    bgm.set_volume(value.volume)
+    bgm.play()
 
 
 def exit():
+    global gms
     #스테이트를 나갈때 게임월드를 초기화
+    del(bgm)
     game_world.objects=[[],[],[],[],[],[],[],[],[],[],[]]
 
 
