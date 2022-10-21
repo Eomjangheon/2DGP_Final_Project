@@ -1,9 +1,9 @@
 from pico2d import*
 import random
-import main_state
+import codeFile.stateCode.main_state as main_state
 import math
 import game_world
-import exp_jam
+import codeFile.classCode.exp_jam as exp_jam
 setXpos=[-1,0,1,-1,0,1,-1,0,1]
 setYpos=[1,1,1,0,0,0,-1,-1,-1]
 #모든 몬스터 종류의 부모 클래스

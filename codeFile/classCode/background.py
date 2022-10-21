@@ -1,5 +1,5 @@
 from pico2d import*
-import main_state
+import codeFile.stateCode.main_state as main_state
 
 #배경 객체
 #플레이어를 가운데 고정하므로 배경이 움직여야함

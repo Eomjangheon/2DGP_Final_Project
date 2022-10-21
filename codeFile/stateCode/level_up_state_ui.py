@@ -1,8 +1,8 @@
 from pico2d import *
-from player import*
-import level_up_state
-import main_state
-import player
+from codeFile.classCode.player import*
+import codeFile.stateCode.level_up_state as level_up_state
+import codeFile.stateCode.main_state as main_state
+import codeFile.classCode.player as player
 #레벨업 스테이트에서 ui를 담당하는 객체이다.
 class Level_up_state_ui:
     level_up_font=None

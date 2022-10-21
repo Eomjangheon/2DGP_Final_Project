@@ -3,9 +3,9 @@ from pico2d import *
 import game_framework
 import title_state
 import random
-from main_state_ui import*
-import main_state
-from level_up_state_ui import*
+from codeFile.stateCode.main_state_ui import*
+import codeFile.stateCode.main_state as main_state
+from codeFile.stateCode.level_up_state_ui import*
 import game_world
 import value
 name = "levelUpState"

@@ -1,10 +1,10 @@
 from pico2d import*
-import level_up_state
+import codeFile.stateCode.level_up_state as level_up_state
 import game_framework
-import main_state
-import skill
+import codeFile.stateCode.main_state as main_state
+import codeFile.classCode.skill as skill
 import game_world
-import start_state
+import codeFile.stateCode.start_state as start_state
 
 class Player:
     image = None

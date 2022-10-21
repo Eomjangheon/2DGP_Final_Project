@@ -1,6 +1,6 @@
 from pico2d import*
 import random
-import main_state
+import codeFile.stateCode.main_state as main_state
 import math
 import game_world
 

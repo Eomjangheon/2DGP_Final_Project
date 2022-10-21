@@ -1,12 +1,12 @@
 from pico2d import *
-from background import*
+from codeFile.classCode.background import*
 import game_framework
 import game_world
-from main_state_ui import *
-from player import*
-import exp_jam
-import monster
-import sound_manager
+from codeFile.stateCode.main_state_ui import *
+from codeFile.classCode.player import*
+import codeFile.classCode.exp_jam as exp_jam
+import codeFile.classCode.monster as monster
+import codeFile.classCode.sound_manager as sound_manager
 player=None
 name = "mainState"
 monTime=0

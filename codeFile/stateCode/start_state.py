@@ -1,7 +1,7 @@
 from pico2d import *
 import game_framework
 import title_state
-import main_state
+import codeFile.stateCode.main_state as main_state
 import value
 name = "StartState"
 

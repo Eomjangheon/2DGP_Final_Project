@@ -1,6 +1,6 @@
 from pico2d import*
-from player import*
-import main_state
+from codeFile.classCode.player import*
+import codeFile.stateCode.main_state as main_state
 import value
 #main_state의 UI객체
 class Main_state_ui:

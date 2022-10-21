@@ -1,9 +1,9 @@
 from pico2d import*
 import random
-import main_state
+import codeFile.stateCode.main_state as main_state
 import game_world
 import value
-import sound_manager
+import codeFile.classCode.sound_manager as sound_manager
 #경험치 객체
 #몬스터가 죽으면 생기는 경험치 보석
 class Exp_jam:

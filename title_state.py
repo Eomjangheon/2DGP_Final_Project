@@ -1,6 +1,6 @@
 from pico2d import *
 import game_framework
-import main_state
+import codeFile.stateCode.main_state as main_state
 name = "TitleState"
 image = None
 def enter():
