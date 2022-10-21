@@ -2,6 +2,7 @@ from pico2d import *
 import game_framework
 import title_state
 import main_state
+import value
 name = "StartState"
 
 
@@ -10,7 +11,7 @@ font_time=0.0
 
 def enter():
     print('here')
-    global image, start_font
+    global image, start_font,bgm
     image = []
     image.append(load_image('res/start_img/introBG.png'))
     image.append(load_image('res/start_img/antonio.png'))
@@ -18,16 +19,21 @@ def enter():
     image.append(load_image('res/start_img/villain.png'))
     image.append(load_image('res/start_img/title.png'))
     start_font=load_font('res/fonts/KO.ttf',50)
+    bgm=load_wav('res/sound/start_bgm.wav')
+    bgm.set_volume(value.volume)
+    bgm.repeat_play()
+    
 def exit():
-    global image,start_font
+    global image,start_font,bgm
     del(image)
     del(start_font)
+    del(bgm)
 
 def update():
     global font_time
     delay(0.01)
     font_time = (font_time+0.01)%2
-
+    
 
 def draw():
     global image,start_font,font_time
