@@ -96,10 +96,11 @@ class Player:
                 for j in range(11,13+1):
                     for mon in main_state.objectSpaceMon[i][j]:
                         if(abs(mon.x-640)<16+mon.w and abs(mon.y-400)<16+mon.h):
-                            self.hp-=mon.damage
-                            self.hitTimer+=1
-                            print(self.hp)
-                            return
+                            if mon.isDie==False:
+                                self.hp-=mon.damage
+                                self.hitTimer+=1
+                                print(self.hp)
+                                return
         else:
             self.hitTimer=(self.hitTimer+1)%10
             
