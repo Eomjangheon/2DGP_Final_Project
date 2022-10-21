@@ -5,6 +5,7 @@ import codeFile.stateCode.main_state as main_state
 import codeFile.classCode.skill as skill
 import game_world
 import codeFile.stateCode.start_state as start_state
+import value
 
 class Player:
     image = None
@@ -99,7 +100,6 @@ class Player:
                             if mon.isDie==False:
                                 self.hp-=mon.damage
                                 self.hitTimer+=1
-                                print(self.hp)
                                 return
         else:
             self.hitTimer=(self.hitTimer+1)%10
@@ -114,6 +114,6 @@ class Player:
     def whip(self,num):
         whip=skill.Whip(self.my_skill[1],num)
         game_world.add_object(whip,4)
-        main_state.sManager.Whip_sound()
+        main_state.sManager[value.num].Whip_sound()
 
     

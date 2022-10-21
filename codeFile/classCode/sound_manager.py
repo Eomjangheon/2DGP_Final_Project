@@ -17,8 +17,14 @@ class Sound_Manager:
             self.monster_hit_sound.set_volume(value.volume)
     def gem_eat_sound(self):
         self.eatGemSound.play()
+        value.num=(value.num+1)%100
+        print(value.num)
     def Whip_sound(self):
         self.whip_sound.play()
+        value.num=(value.num+1)%100
+        print(value.num)
     def Monster_hit_sound(self):
         self.monster_hit_sound.play()
+        value.num=(value.num+1)%100
+        print(value.num)
     

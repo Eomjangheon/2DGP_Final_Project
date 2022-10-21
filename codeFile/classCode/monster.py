@@ -4,6 +4,7 @@ import codeFile.stateCode.main_state as main_state
 import math
 import game_world
 import codeFile.classCode.exp_jam as exp_jam
+import value
 setXpos=[-1,0,1,-1,0,1,-1,0,1]
 setYpos=[1,1,1,0,0,0,-1,-1,-1]
 #모든 몬스터 종류의 부모 클래스
@@ -119,7 +120,7 @@ class Monster:
                                     self.x+=30
                                 self.hp-=skill.damage
                                 self.isHitByWhip=True
-                                main_state.sManager.Monster_hit_sound()
+                                main_state.sManager[value.num].Monster_hit_sound()
                                 damage_font=DamageFont(self.x,self.y,skill.damage)
                                 game_world.add_object(damage_font,5)
                         else:
@@ -134,7 +135,7 @@ class Monster:
                             self.y-=math.sin(self.theta)*20
                             self.hp-=skill.damage
                             damage_font=DamageFont(self.x,self.y,skill.damage)
-                            main_state.sManager.Monster_hit_sound()
+                            main_state.sManager[value.num].Monster_hit_sound()
                             game_world.add_object(damage_font,5)
                             game_world.remove_object(skill)
                         if(self.hp<=0):

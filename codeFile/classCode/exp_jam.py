@@ -49,8 +49,8 @@ class Exp_jam:
         self.dy+=self.ay
         self.count+=1
         if self.count==10:
-            main_state.player.exp+=self.exp
-            main_state.sManager.gem_eat_sound()
+            #main_state.player.exp+=self.exp
+            main_state.sManager[value.num].gem_eat_sound()
             game_world.remove_object(self)
     
     #정확히 10프레임으로 캐릭터에 가기 위한

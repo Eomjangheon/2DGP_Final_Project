@@ -29,7 +29,7 @@ def enter():
     objectSpaceSkill=[[[] for i in range (24)] for i in range(18)]
     player=None
     player=Player()
-    sManager=sound_manager.Sound_Manager()
+    sManager=[sound_manager.Sound_Manager() for i in range(100)]
     main_state_ui=Main_state_ui()
     backgrounds=[Background() for i in range(9)]
     for i in range(9):
@@ -40,7 +40,7 @@ def enter():
     game_world.add_object(main_state_ui,10)
     bgm=load_music('res/sound/ma.ogg')
     bgm.set_volume(value.volume)
-    bgm.play()
+    bgm.repeat_play()
 
 
 def exit():
