@@ -7,14 +7,18 @@ from main_state_ui import*
 import main_state
 from level_up_state_ui import*
 import game_world
+import value
 name = "levelUpState"
 #레벨업시 잠시 들어오는 state이다.
 #여기서 스킬 레벨을 올릴수있다.
 def enter():
-    global level_up_state_ui,isRestart
+    global level_up_state_ui,bgm
     level_up_state_ui=Level_up_state_ui()
     random.shuffle(level_up_state_ui.getSkill)
     print(main_state.player.my_skill)
+    bgm=load_wav('res/sound/level_up_sound.wav')
+    bgm.set_volume(value.volume)
+    bgm.play()
     pass
 
 def exit():

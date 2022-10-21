@@ -114,5 +114,6 @@ class Player:
     def whip(self,num):
         whip=skill.Whip(self.my_skill[1],num)
         game_world.add_object(whip,4)
+        main_state.sManager.Whip_sound()
 
     

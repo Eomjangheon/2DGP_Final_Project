@@ -2,7 +2,8 @@ from pico2d import*
 import random
 import main_state
 import game_world
-
+import value
+import sound_manager
 #경험치 객체
 #몬스터가 죽으면 생기는 경험치 보석
 class Exp_jam:
@@ -17,6 +18,7 @@ class Exp_jam:
         self.isEat=False
         if self.image==None:
             self.image=load_image("res/vfx/GemGreen.png")
+        
 
     def update(self):
         #캐릭터가 움직이는 반대방향 이동
@@ -40,6 +42,7 @@ class Exp_jam:
     #총 10프레임으로 가속도 a를 주어 잠시 멀어졌다가 빨려들어온다.
     #모든 보석은 10프레임에 맞춰 흡수
     def eat(self):
+            
         self.x+=self.dx
         self.y+=self.dy
         self.dx+=self.ax
@@ -47,6 +50,7 @@ class Exp_jam:
         self.count+=1
         if self.count==10:
             main_state.player.exp+=self.exp
+            main_state.sManager.gem_eat_sound()
             game_world.remove_object(self)
     
     #정확히 10프레임으로 캐릭터에 가기 위한

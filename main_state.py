@@ -6,6 +6,7 @@ from main_state_ui import *
 from player import*
 import exp_jam
 import monster
+import sound_manager
 player=None
 name = "mainState"
 monTime=0
@@ -19,9 +20,8 @@ skill_name=[[0,'불의 지팡이','무작위 적을 향해 발사되며 큰 피�
             [3,'시금치','모든 공격의 데미지가 2증가합니다.','모든 공격의 데미지가 4증가합니다.','모든 공격의 데미지가 6증가합니다.','모든 공격의 데미지가 8증가합니다.','모든 공격의 데미지가 10증가합니다.',]
             ]
 def enter():
-    global bgm
+    global bgm,sManager
     print("main")
-    
     level_up_state.Level_up_state_ui.getSkill=[i for i in range(4)]
     mapSet=[[-1280,1280],[0,1280],[1280,1280],[-1280,0],[0,0],[1280,0],[-1280,-1280],[0,-1280],[1280,-1280]]
     global player,main_state_ui,backgrounds,objectSpaceMon,objectSpaceSkill
@@ -29,6 +29,7 @@ def enter():
     objectSpaceSkill=[[[] for i in range (24)] for i in range(18)]
     player=None
     player=Player()
+    sManager=sound_manager.Sound_Manager()
     main_state_ui=Main_state_ui()
     backgrounds=[Background() for i in range(9)]
     for i in range(9):
@@ -43,7 +44,7 @@ def enter():
 
 
 def exit():
-    global gms
+    global bgm
     #스테이트를 나갈때 게임월드를 초기화
     del(bgm)
     game_world.objects=[[],[],[],[],[],[],[],[],[],[],[]]
