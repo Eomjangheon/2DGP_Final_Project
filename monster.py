@@ -119,6 +119,7 @@ class Monster:
                                     self.x+=30
                                 self.hp-=skill.damage
                                 self.isHitByWhip=True
+                                main_state.sManager.Monster_hit_sound()
                                 damage_font=DamageFont(self.x,self.y,skill.damage)
                                 game_world.add_object(damage_font,5)
                         else:
@@ -133,6 +134,7 @@ class Monster:
                             self.y-=math.sin(self.theta)*20
                             self.hp-=skill.damage
                             damage_font=DamageFont(self.x,self.y,skill.damage)
+                            main_state.sManager.Monster_hit_sound()
                             game_world.add_object(damage_font,5)
                             game_world.remove_object(skill)
                         if(self.hp<=0):
