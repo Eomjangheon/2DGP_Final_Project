@@ -18,19 +18,20 @@ objectSpaceSkill=[[[] for i in range (24)] for i in range(18)]
 skill_name=[[0,'불의 지팡이','무작위 적을 향해 발사되며 큰 피해를 줍니다.','갯수가 1개 증가하고 크기가 커집니다.','갯수가 1개 증가하고 크기가 커집니다.','갯수가 1개 증가하고 크기가 커집니다.','갯수가 1개 증가하고 크기가 커집니다.'],
             [1,'채찍','수평으로 적을 관통해 공격합니다.','갯수가 1개 증가하고 강력해집니다.','갯수가 1개 증가하고 강력해집니다.','갯수가 1개 증가하고 강력해집니다.','갯수가 1개 증가하고 강력해집니다.'],
             [2,'마법의 오브','더 먼 거리의 아이템을 획득합니다.','더 먼 거리의 아이템을 획득합니다.','더 먼 거리의 아이템을 획득합니다.','더 먼 거리의 아이템을 획득합니다.','더 먼 거리의 아이템을 획득합니다.',],
-            [3,'시금치','모든 공격의 데미지가 2증가합니다.','모든 공격의 데미지가 4증가합니다.','모든 공격의 데미지가 6증가합니다.','모든 공격의 데미지가 8증가합니다.','모든 공격의 데미지가 10증가합니다.',]
+            [3,'시금치','모든 공격의 데미지가 2증가합니다.','모든 공격의 데미지가 4증가합니다.','모든 공격의 데미지가 6증가합니다.','모든 공격의 데미지가 8증가합니다.','모든 공격의 데미지가 10증가합니다.',],
+            [4,'도끼','도끼를 위로 던집니다.','갯수가 1개 증가하고 강력해집니다.','갯수가 1개 증가하고 강력해집니다.','갯수가 1개 증가하고 강력해집니다.','갯수가 1개 증가하고 강력해집니다.',]
             ]
 def enter():
     global bgm,sManager
     print("main")
-    level_up_state.Level_up_state_ui.getSkill=[i for i in range(4)]
+    level_up_state.Level_up_state_ui.getSkill=[i for i in range(5)]
     mapSet=[[-1280,1280],[0,1280],[1280,1280],[-1280,0],[0,0],[1280,0],[-1280,-1280],[0,-1280],[1280,-1280]]
     global player,main_state_ui,backgrounds,objectSpaceMon,objectSpaceSkill
     objectSpaceMon=[[[] for i in range (24)] for i in range(18)] 
     objectSpaceSkill=[[[] for i in range (24)] for i in range(18)]
     player=None
     player=Player()
-    sManager=[sound_manager.Sound_Manager() for i in range(100)]
+    sManager=[sound_manager.Sound_Manager() for i in range(1)]
     main_state_ui=Main_state_ui()
     backgrounds=[Background() for i in range(9)]
     for i in range(9):
@@ -120,6 +121,7 @@ def update():
     for game_object in game_world.all_objects():
         game_object.update()
     
+    sManager[0].self_update()
     die()
 
 #level_up_state를 위한 그리기 함수

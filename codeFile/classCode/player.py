@@ -24,9 +24,10 @@ class Player:
         self.hitTimer=0
         self.grabDis=50
         #fireball
-        self.my_skill=[2,2,1,2]
+        self.my_skill=[2,2,1,2,2]
         self.timerSkill=0
         self.timerSkill1=0
+        self.timerSkill2=0
         
         if Player.image==None:
             Player.image=load_image('res/character/Antonio_Sheet.png')
@@ -41,8 +42,10 @@ class Player:
 
         self.timerSkill+=0.16
         self.timerSkill1+=0.16
+        self.timerSkill2+=0.16
         if self.exp>=self.expCoe:
             self.level_up()
+
         if self.my_skill[0]!=0:
             if self.timerSkill>2:
                 self.fire_ball()
@@ -55,6 +58,15 @@ class Player:
                     
         if(self.timerSkill1>5):
             self.timerSkill1=0
+
+        if self.my_skill[4]!=0:
+            for i in range(self.my_skill[4]):
+                if abs(self.timerSkill2-0.8*(i+1))<0.1:
+                    self.axe(i)
+                    
+        if(self.timerSkill2>5):
+            self.timerSkill2=0
+        
         self.hit()
     
     def draw(self):
@@ -116,5 +128,10 @@ class Player:
         whip=skill.Whip(self.my_skill[1],num)
         game_world.add_object(whip,4)
         main_state.sManager[value.num].Whip_sound()
+
+    def axe(self,num):
+        axe_attack=skill.Axe(self.my_skill[4],num)
+        game_world.add_object(axe_attack,4)
+        main_state.sManager[value.num].Axe_sound()
 
     

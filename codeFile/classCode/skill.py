@@ -81,6 +81,33 @@ class Whip(Skill):
         else:
             self.image.clip_composite_draw(69*self.frame, 0, 69, 18, 0, 'h', self.x, self.y, self.w, self.h)
 
+class Axe(Skill):
+    name='axe'
+    image=None
+    def __init__(self,s_lv,num):
+        super().__init__()
+        self.lv=s_lv
+        self.w,self.h=18*(self.lv+1),20*(self.lv+1)
+        self.damage=s_lv*4+(main_state.player.my_skill[3]*2)
+        self.number=num
+        self.rad=0
+        self.dy=20
+        self.ay=-1
+        self.dx=-4+self.number*3
+
+        if Axe.image==None:
+            Axe.image=load_image("res/vfx/axe.png")
+
+    def update(self):
+        if(self.y<0):
+            game_world.remove_object(self) 
+        self.rad+=0.2
+        self.x+=self.dx
+        self.y+=self.dy
+        self.dy+=self.ay
+    
+    def draw(self):
+        self.image.composite_draw(self.rad, '', self.x, self.y, self.w, self.h)
 
 
 
