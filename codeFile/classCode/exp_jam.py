@@ -16,8 +16,8 @@ class Exp_jam:
         self.count=0
         self.exp=inExp
         self.isEat=False
-        if self.image==None:
-            self.image=load_image("res/vfx/GemGreen.png")
+        if Exp_jam.image==None:
+            Exp_jam.image=load_image("res/vfx/GemGreen.png")
         
 
     def update(self):
@@ -49,7 +49,7 @@ class Exp_jam:
         self.dy+=self.ay
         self.count+=1
         if self.count==10:
-            #main_state.player.exp+=self.exp
+            main_state.player.exp+=self.exp
             main_state.sManager[value.num].gem_eat_sound()
             game_world.remove_object(self)
     

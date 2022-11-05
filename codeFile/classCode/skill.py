@@ -35,8 +35,8 @@ class FireBall(Skill):
             self.theta+=math.pi
         self.dx=math.cos(self.theta)*self.speed
         self.dy=math.sin(self.theta)*self.speed
-        if self.image==None:
-            self.image=load_image("res/vfx/fireball.png")
+        if FireBall.image==None:
+            FireBall.image=load_image("res/vfx/fireball.png")
             
     def update(self):
         self.x-=main_state.player.dx
@@ -66,8 +66,8 @@ class Whip(Skill):
         else:
             self.x-=150
 
-        if self.image==None:
-            self.image=load_image("res/vfx/whip.png")
+        if Whip.image==None:
+            Whip.image=load_image("res/vfx/whip.png")
 
     def update(self):
         self.framecount+=1

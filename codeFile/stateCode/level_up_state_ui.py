@@ -17,28 +17,28 @@ class Level_up_state_ui:
     getSkill=[i for i in range(4)]
 
     def __init__(self):
-        if self.level_up_font==None:
-            self.level_up_font=load_font('res/fonts/KO.ttf',40)
-        if self.description_font==None:
-            self.description_font=load_font('res/fonts/KO.ttf',30)
-        if self.description_font2==None:
-            self.description_font2=load_font('res/fonts/KO.ttf',20)
-        if self.levelup_frame==None:
-            self.levelup_frame=load_image('res/ui/levelup_frame.png')
-        if self.skill_frame==None:
-            self.skill_frame=load_image('res/ui/frame_skill.png')
-        if self.arrow==None:
-            self.arrow=load_image('res/ui/arrow.png')
-        if self.item_frame==None:
-            self.item_frame=load_image('res/ui/frameB9.png')
-        if self.skill_img[0]==None:
-            self.skill_img[0]=load_image('res/ui/WandBall.png')
-        if self.skill_img[1]==None:
-            self.skill_img[1]=load_image('res/ui/Whip.png')
-        if self.skill_img[2]==None:
-            self.skill_img[2]=load_image('res/ui/OrbGlow.png')
-        if self.skill_img[3]==None:
-            self.skill_img[3]=load_image('res/ui/Leaf.png')
+        if Level_up_state_ui.level_up_font==None:
+            Level_up_state_ui.level_up_font=load_font('res/fonts/KO.ttf',40)
+        if Level_up_state_ui.description_font==None:
+            Level_up_state_ui.description_font=load_font('res/fonts/KO.ttf',30)
+        if Level_up_state_ui.description_font2==None:
+            Level_up_state_ui.description_font2=load_font('res/fonts/KO.ttf',20)
+        if Level_up_state_ui.levelup_frame==None:
+            Level_up_state_ui.levelup_frame=load_image('res/ui/levelup_frame.png')
+        if Level_up_state_ui.skill_frame==None:
+            Level_up_state_ui.skill_frame=load_image('res/ui/frame_skill.png')
+        if Level_up_state_ui.arrow==None:
+            Level_up_state_ui.arrow=load_image('res/ui/arrow.png')
+        if Level_up_state_ui.item_frame==None:
+            Level_up_state_ui.item_frame=load_image('res/ui/frameB9.png')
+        if Level_up_state_ui.skill_img[0]==None:
+            Level_up_state_ui.skill_img[0]=load_image('res/ui/WandBall.png')
+        if Level_up_state_ui.skill_img[1]==None:
+            Level_up_state_ui.skill_img[1]=load_image('res/ui/Whip.png')
+        if Level_up_state_ui.skill_img[2]==None:
+            Level_up_state_ui.skill_img[2]=load_image('res/ui/OrbGlow.png')
+        if Level_up_state_ui.skill_img[3]==None:
+            Level_up_state_ui.skill_img[3]=load_image('res/ui/Leaf.png')
         self.selectNum=0
         
 

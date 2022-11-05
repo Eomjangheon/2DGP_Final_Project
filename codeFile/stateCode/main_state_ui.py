@@ -9,12 +9,12 @@ class Main_state_ui:
     exp_bar=None
     
     def __init__(self):
-        if self.level_font==None:
-            self.level_font=load_font('res/fonts/KO.ttf',30)
-        if self.exp_box==None:
-            self.exp_box=load_image('res/ui/frameB9.png')
-        if self.exp_bar==None:
-            self.exp_bar=load_image('res/ui/exp_bar.png')
+        if Main_state_ui.level_font==None:
+            Main_state_ui.level_font=load_font('res/fonts/KO.ttf',30)
+        if Main_state_ui.exp_box==None:
+            Main_state_ui.exp_box=load_image('res/ui/frameB9.png')
+        if Main_state_ui.exp_bar==None:
+            Main_state_ui.exp_bar=load_image('res/ui/exp_bar.png')
         
             
     def draw(self):
