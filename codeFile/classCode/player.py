@@ -78,17 +78,18 @@ class Player:
         self.level+=1
         self.exp-=self.expCoe
         self.expCoe*=1.1
+        self.set_stop()
+        
+        main_state.draw()
+        game_framework.push_state(level_up_state)
+
+    def set_stop(self):
         if(self.dx>0):
             self.prior_dir='Right'
         else:
             self.prior_dir='Left'
         self.dx=0
         self.dy=0
-        
-        main_state.draw()
-        game_framework.push_state(level_up_state)
-
-
 
     #몬스터에게 닿았을때
     def hit(self):

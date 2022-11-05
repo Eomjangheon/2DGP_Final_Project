@@ -70,6 +70,7 @@ def handle_events():
             elif event.key==SDLK_DOWN:
                 player.dy=-3
             elif event.key==SDLK_ESCAPE:
+                player.set_stop()
                 game_framework.push_state(pause_state)
         #방향키를 떼면 이전 방향을 기억하고, 뗀곳의 dx, dy조절
         elif event.type==SDL_KEYUP:
