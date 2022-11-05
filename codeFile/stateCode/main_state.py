@@ -7,6 +7,7 @@ from codeFile.classCode.player import*
 import codeFile.classCode.exp_jam as exp_jam
 import codeFile.classCode.monster as monster
 import codeFile.classCode.sound_manager as sound_manager
+import codeFile.stateCode.pause_state as pause_state
 player=None
 name = "mainState"
 monTime=0
@@ -69,8 +70,7 @@ def handle_events():
             elif event.key==SDLK_DOWN:
                 player.dy=-3
             elif event.key==SDLK_ESCAPE:
-                mon=monster.Bat()
-                game_world.add_object(mon,3)
+                game_framework.push_state(pause_state)
         #방향키를 떼면 이전 방향을 기억하고, 뗀곳의 dx, dy조절
         elif event.type==SDL_KEYUP:
             if event.key==SDLK_RIGHT:
