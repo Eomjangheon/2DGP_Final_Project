@@ -13,8 +13,8 @@ class Level_up_state_ui:
     arrow=None
     item_frame=None
     #구현된 스킬, 패시브 개수만큼
-    skill_img=[None for i in range(5)]
-    getSkill=[i for i in range(5)]
+    skill_img=[None for i in range(6)]
+    getSkill=[i for i in range(6)]
 
     def __init__(self):
         if Level_up_state_ui.level_up_font==None:
@@ -41,6 +41,8 @@ class Level_up_state_ui:
             Level_up_state_ui.skill_img[3]=load_image('res/ui/Leaf.png')
         if Level_up_state_ui.skill_img[4]==None:
             Level_up_state_ui.skill_img[4]=load_image('res/ui/Axe.png')
+        if Level_up_state_ui.skill_img[5]==None:
+            Level_up_state_ui.skill_img[5]=load_image('res/ui/HolyBook.png')
         self.selectNum=0
         
 

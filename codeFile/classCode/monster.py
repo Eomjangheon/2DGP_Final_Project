@@ -23,12 +23,16 @@ class Monster:
         self.h, self.w=0,0
         self.isDie=False
         self.isHitByWhip=False
+        self.isHitByAxe=False
+        self.isHitByBook=False
         self.frame, self.frame_count=0,0
         self.dieFrame=0
         self.hp=0
         self.max_hp=0
         self.picMoveW,self.picMoveH,self.picDieW,self.picDieH=0,0,0,0
         self.isHitByWhipTimer=0
+        self.isHitByAxeTimer=0
+        self.isHitByBookTimer=0
 
     def update(self):
         #캐릭터의 이동만큼 반대로 이동
@@ -52,6 +56,19 @@ class Monster:
             if(self.isHitByWhipTimer>3):
                 self.isHitByWhip=False
                 self.isHitByWhipTimer=0
+
+            if(self.isHitByAxe):
+                self.isHitByAxeTimer+=0.16
+            if(self.isHitByAxeTimer>3):
+                self.isHitByAxe=False
+                self.isHitByAxeTimer=0
+
+            if(self.isHitByBook):
+                self.isHitByBookTimer+=0.16
+            if(self.isHitByBookTimer>3):
+                self.isHitByBook=False
+                self.isHitByBookTimer=0
+
             self.x+=self.dx
             self.y+=self.dy
             #애니메이션의 자연스러움을 위한 연산
@@ -112,18 +129,7 @@ class Monster:
             if teY+setYpos[i]>=0 and teY+setYpos[i]<18 and teX+setXpos[i]>=0 and teX+setXpos[i]<24:
                 for skill in main_state.objectSpaceSkill[teY+setYpos[i]][teX+setXpos[i]] :
                     if(abs(skill.x-self.x)<(skill.w+self.w)/2 and abs(skill.y-self.y)<(skill.h+self.h)/2):
-                        if(skill.name=='whip'):
-                            if self.isHitByWhip==False:
-                                if(self.x<=640):
-                                    self.x-=30
-                                else:
-                                    self.x+=30
-                                self.hp-=skill.damage
-                                self.isHitByWhip=True
-                                main_state.sManager[value.num].Monster_hit_sound()
-                                damage_font=DamageFont(self.x,self.y,skill.damage)
-                                game_world.add_object(damage_font,5)
-                        else:
+                        if(skill.name=='fireball'):
                             tempX=skill.x-self.x
                             tempY=skill.y-self.y
                             if tempX==0:
@@ -138,6 +144,42 @@ class Monster:
                             main_state.sManager[value.num].Monster_hit_sound()
                             game_world.add_object(damage_font,5)
                             game_world.remove_object(skill)
+                        elif skill.name=='whip':
+                            if self.isHitByWhip==False:
+                                if(self.x<=640):
+                                    self.x-=30
+                                else:
+                                    self.x+=30
+                            self.hp-=skill.damage
+                            self.isHitByWhip=True
+                            main_state.sManager[value.num].Monster_hit_sound()
+                            damage_font=DamageFont(self.x,self.y,skill.damage)
+                            game_world.add_object(damage_font,5)
+                        elif skill.name=='axe':
+                            if self.isHitByAxe==False:
+                                if(self.x<=640):
+                                    self.x-=30
+                                else:
+                                    self.x+=30
+                            self.hp-=skill.damage
+                            self.isHitByAxe=True
+                            main_state.sManager[value.num].Monster_hit_sound()
+                            damage_font=DamageFont(self.x,self.y,skill.damage)
+                            game_world.add_object(damage_font,5)
+                        elif skill.name=='book':
+                            if self.isHitByBook==False:
+                                if(self.x<=640):
+                                    self.x-=30
+                                else:
+                                    self.x+=30
+                            self.hp-=skill.damage
+                            self.isHitByBook=True
+                            main_state.sManager[value.num].Monster_hit_sound()
+                            damage_font=DamageFont(self.x,self.y,skill.damage)
+                            game_world.add_object(damage_font,5)
+                        
+
+
                         if(self.hp<=0):
                             self.isDie=True
                             self.die()

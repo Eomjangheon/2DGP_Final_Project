@@ -88,7 +88,7 @@ class Axe(Skill):
         super().__init__()
         self.lv=s_lv
         self.w,self.h=18*(self.lv+1),20*(self.lv+1)
-        self.damage=s_lv*4+(main_state.player.my_skill[3]*2)
+        self.damage=s_lv*4+(main_state.player.my_skill[4]*2)
         self.number=num
         self.rad=0
         self.dy=20
@@ -108,6 +108,32 @@ class Axe(Skill):
     
     def draw(self):
         self.image.composite_draw(self.rad, '', self.x, self.y, self.w, self.h)
+
+class Book(Skill):
+    name='book'
+    image=None
+    def __init__(self,s_lv,num):
+        super().__init__()
+        self.lv=s_lv
+        self.w,self.h=12*(self.lv+1),16*(self.lv+1)
+        self.damage=s_lv*4+(main_state.player.my_skill[5]*2)
+        self.number=num
+        self.rad=0
+        self.timer=0
+
+        if Book.image==None:
+            Book.image=load_image("res/vfx/HolyBook.png")
+
+    def update(self):
+        if(self.timer>30):
+            game_world.remove_object(self) 
+        self.rad+=0.1
+        self.x=640+math.cos(self.rad+math.radians(360/self.lv*self.number))*40*self.lv
+        self.y=400+math.sin(self.rad+math.radians(360/self.lv*self.number))*40*self.lv
+        self.timer+=0.16
+    
+    def draw(self):
+        self.image.draw(self.x, self.y, self.w, self.h)
 
 
 

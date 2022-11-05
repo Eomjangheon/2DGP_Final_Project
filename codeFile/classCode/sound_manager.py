@@ -2,12 +2,13 @@ from pico2d import*
 import value
 #main_state의 UI객체
 class Sound_Manager:
-    soundCheck=[False for i in range(5)]
+    soundCheck=[False for i in range(6)]
     eatGemSound=None
     whip_sound=None
     monster_hit_sound=None
     axe_sound=None
     lvup_sound=None
+    book_sound=None
     sound_stack=0
     def __init__(self):
         if Sound_Manager.eatGemSound==None:
@@ -23,8 +24,11 @@ class Sound_Manager:
             Sound_Manager.monster_hit_sound=load_wav('res/sound/enemy_hit_sound.wav')
             Sound_Manager.monster_hit_sound.set_volume(value.volume)
         if Sound_Manager.lvup_sound==None:
-            Sound_Manager.lvup_sound=load_wav('res/sound/level_up_sound.wav')
+            Sound_Manager.lvup_sound=load_wav('res/sound/skill_whip_sound.wav')
             Sound_Manager.lvup_sound.set_volume(value.volume)
+        if Sound_Manager.book_sound==None:
+            Sound_Manager.book_sound=load_wav('res/sound/skill_whip_sound.wav')
+            Sound_Manager.book_sound.set_volume(value.volume)
     def gem_eat_sound(self):
         if self.soundCheck[0]==False:
             self.eatGemSound.play()
@@ -45,11 +49,15 @@ class Sound_Manager:
         if self.soundCheck[4]==False:
             self.lvup_sound.play()
             self.soundCheck[4]=True
+    def Book_sound(self):
+        if self.soundCheck[5]==False:
+            self.book_sound.play()
+            self.soundCheck[5]=True
     def self_update(self):
         self.sound_stack+=1
         self.sound_stack%=5
         if self.sound_stack==0:
-            for i in range(5):
+            for i in range(6):
                 self.soundCheck[i]=False
 
 
