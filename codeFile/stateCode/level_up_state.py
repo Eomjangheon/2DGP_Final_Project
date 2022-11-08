@@ -19,6 +19,9 @@ def enter():
     bgm=load_wav('res/sound/level_up_sound.wav')
     bgm.set_volume(value.volume)
     bgm.play()
+    main_state.player.hp+=main_state.player.my_skill[7]*5
+    if main_state.player.hp>main_state.player.max_hp:
+        main_state.player.hp=main_state.player.max_hp 
     pass
 
 def exit():
