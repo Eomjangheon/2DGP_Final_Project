@@ -20,12 +20,13 @@ skill_name=[[0,'불의 지팡이','무작위 적을 향해 발사되며 큰 피�
             [2,'마법의 오브','더 먼 거리의 아이템을 획득합니다.','더 먼 거리의 아이템을 획득합니다.','더 먼 거리의 아이템을 획득합니다.','더 먼 거리의 아이템을 획득합니다.','더 먼 거리의 아이템을 획득합니다.',],
             [3,'시금치','모든 공격의 데미지가 2증가합니다.','모든 공격의 데미지가 4증가합니다.','모든 공격의 데미지가 6증가합니다.','모든 공격의 데미지가 8증가합니다.','모든 공격의 데미지가 10증가합니다.',],
             [4,'도끼','도끼를 위로 던집니다.','갯수가 1개 증가하고 강력해집니다.','갯수가 1개 증가하고 강력해집니다.','갯수가 1개 증가하고 강력해집니다.','갯수가 1개 증가하고 강력해집니다.',],
-            [5,'성경책','주변을 돌며 적을 공격합니다','갯수가 1개 증가하고 커집니다.','갯수가 1개 증가하고 커집니다.','갯수가 1개 증가하고 커집니다.','갯수가 1개 증가하고 커집니다.',]
+            [5,'성경책','주변을 돌며 적을 공격합니다','갯수가 1개 증가하고 커집니다.','갯수가 1개 증가하고 커집니다.','갯수가 1개 증가하고 커집니다.','갯수가 1개 증가하고 커집니다.',],
+            [5,'날개','캐릭터의 이동속도가 1.1배로 증가합니다','캐릭터의 이동속도가 1.2배로 증가합니다.','캐릭터의 이동속도가 1.3배로 증가합니다.','캐릭터의 이동속도가 1.4배로 증가합니다.','캐릭터의 이동속도가 1.5배로 증가합니다',]
             ]
 def enter():
     global bgm,sManager
     print("main")
-    level_up_state.Level_up_state_ui.getSkill=[i for i in range(6)]
+    level_up_state.Level_up_state_ui.getSkill=[i for i in range(7)]
     mapSet=[[-1280,1280],[0,1280],[1280,1280],[-1280,0],[0,0],[1280,0],[-1280,-1280],[0,-1280],[1280,-1280]]
     global player,main_state_ui,backgrounds,objectSpaceMon,objectSpaceSkill
     objectSpaceMon=[[[] for i in range (24)] for i in range(18)] 
@@ -62,15 +63,15 @@ def handle_events():
             game_framework.quit()
         elif event.type==SDL_KEYDOWN:
             if event.key==SDLK_RIGHT:
-                player.dx=3
+                player.dx=3+player.my_skill[6]*0.1*3
                 player.prior_dir='Right'
             elif event.key==SDLK_LEFT:
-                player.dx=-3
+                player.dx=-3-player.my_skill[6]*0.1*3
                 player.prior_dir='Left'
             elif event.key==SDLK_UP:
-                player.dy=3
+                player.dy=3+player.my_skill[6]*0.1*3
             elif event.key==SDLK_DOWN:
-                player.dy=-3
+                player.dy=-3-player.my_skill[6]*0.1*3
             elif event.key==SDLK_ESCAPE:
                 player.set_stop()
                 game_framework.push_state(pause_state)

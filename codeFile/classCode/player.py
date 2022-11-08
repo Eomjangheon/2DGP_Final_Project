@@ -24,7 +24,7 @@ class Player:
         self.hitTimer=0
         self.grabDis=50
         #fireball
-        self.my_skill=[2,2,1,2,2,2]
+        self.my_skill=[2,2,1,2,2,2,1]
         self.timerSkill=0
         self.timerSkill1=0
         self.timerSkill2=0
