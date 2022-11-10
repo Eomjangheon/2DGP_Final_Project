@@ -64,15 +64,15 @@ def handle_events():
             game_framework.quit()
         elif event.type==SDL_KEYDOWN:
             if event.key==SDLK_RIGHT:
-                player.dx=3+player.my_skill[6]*0.1*3
+                player.dx=(3+player.my_skill[6]*0.1*3)
                 player.prior_dir='Right'
             elif event.key==SDLK_LEFT:
-                player.dx=-3-player.my_skill[6]*0.1*3
+                player.dx=(-3-player.my_skill[6]*0.1*3)
                 player.prior_dir='Left'
             elif event.key==SDLK_UP:
-                player.dy=3+player.my_skill[6]*0.1*3
+                player.dy=(3+player.my_skill[6]*0.1*3)
             elif event.key==SDLK_DOWN:
-                player.dy=-3-player.my_skill[6]*0.1*3
+                player.dy=(-3-player.my_skill[6]*0.1*3)
             elif event.key==SDLK_ESCAPE:
                 player.set_stop()
                 game_framework.push_state(pause_state)
@@ -96,9 +96,9 @@ def update():
     global monTime
     global objectSpaceMon
     global objectSpaceSkill
-    monTime+=0.16
+    monTime+=game_framework.frame_time
     #최대 몬스터 제한
-    if(len(game_world.objects[3])<300 and monTime>1):
+    if(len(game_world.objects[3])<300 and monTime>0.1):
         mon=monster.Bat()
         game_world.add_object(mon,3)
         mon=monster.Armor()
@@ -138,7 +138,6 @@ def draw():
     for game_object in game_world.all_objects():
         game_object.draw()
     update_canvas()
-    delay(0.016)
 
 #캐릭터가 죽을경우 state변환
 def die():

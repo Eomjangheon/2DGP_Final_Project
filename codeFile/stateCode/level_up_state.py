@@ -68,8 +68,7 @@ def draw():
     main_state.drawWorld()
     level_up_state_ui.draw()
     update_canvas()
-    
-    delay(0.02)
+
 
 def pause(): pass
 def resume(): pass

@@ -3,6 +3,7 @@ import random
 import codeFile.stateCode.main_state as main_state
 import game_world
 import value
+import game_framework
 import codeFile.classCode.sound_manager as sound_manager
 #경험치 객체
 #몬스터가 죽으면 생기는 경험치 보석
@@ -22,8 +23,8 @@ class Exp_jam:
 
     def update(self):
         #캐릭터가 움직이는 반대방향 이동
-        self.x-=main_state.player.dx
-        self.y-=main_state.player.dy
+        self.x-=main_state.player.dx*game_framework.frame_time*60
+        self.y-=main_state.player.dy*game_framework.frame_time*60
 
         #캐릭터의 아이템 흡수범위
         grabDistan=main_state.player.grabDis+main_state.player.my_skill[2]*20
@@ -43,12 +44,12 @@ class Exp_jam:
     #모든 보석은 10프레임에 맞춰 흡수
     def eat(self):
             
-        self.x+=self.dx
-        self.y+=self.dy
-        self.dx+=self.ax
-        self.dy+=self.ay
-        self.count+=1
-        if self.count==10:
+        self.x+=self.dx*game_framework.frame_time*60
+        self.y+=self.dy*game_framework.frame_time*60
+        self.dx+=self.ax*game_framework.frame_time*60
+        self.dy+=self.ay*game_framework.frame_time*60
+        self.count+=game_framework.frame_time
+        if self.count>0.16:
             main_state.player.exp+=self.exp
             main_state.sManager[value.num].gem_eat_sound()
             game_world.remove_object(self)

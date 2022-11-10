@@ -3,6 +3,7 @@ import random
 import codeFile.stateCode.main_state as main_state
 import math
 import game_world
+import game_framework
 
 
 class Skill:
@@ -33,16 +34,16 @@ class FireBall(Skill):
         self.theta=math.atan(self.dy/self.dx)
         if(self.dx<0):
             self.theta+=math.pi
-        self.dx=math.cos(self.theta)*self.speed
-        self.dy=math.sin(self.theta)*self.speed
+        self.dx=math.cos(self.theta)
+        self.dy=math.sin(self.theta)
         if FireBall.image==None:
             FireBall.image=load_image("res/vfx/fireball.png")
             
     def update(self):
-        self.x-=main_state.player.dx
-        self.y-=main_state.player.dy
-        self.x+=self.dx
-        self.y+=self.dy
+        self.x-=main_state.player.dx*game_framework.frame_time*60
+        self.y-=main_state.player.dy*game_framework.frame_time*60
+        self.x+=self.dx*game_framework.frame_time*60*5
+        self.y+=self.dy*game_framework.frame_time*60*5
         if (self.x>1280 or self.x<0 or self.y<0 or self.y>800):
             game_world.remove_object(self)
     
@@ -61,6 +62,9 @@ class Whip(Skill):
         self.framecount=0
         self.number=num
         self.y-=30-30*self.number
+        self.TIME_PER_ACTION=0.2
+        self.ACTION_PER_TIME=1.0/self.TIME_PER_ACTION
+        self.FRAMES_PER_ACTION = 5
         if(self.number%2==0):
             self.x+=150
         else:
@@ -70,16 +74,15 @@ class Whip(Skill):
             Whip.image=load_image("res/vfx/whip.png")
 
     def update(self):
-        self.framecount+=1
-        if(self.framecount==10):
+        self.frame = (self.frame + self.FRAMES_PER_ACTION * self.ACTION_PER_TIME * game_framework.frame_time)
+        if(int(self.frame)==5):
             game_world.remove_object(self) 
-        self.frame=self.framecount//2
     
     def draw(self):
         if(self.number%2==0):
-            self.image.clip_composite_draw(69*self.frame, 0, 69, 18, 0, '', self.x, self.y, self.w, self.h)
+            self.image.clip_composite_draw(69*int(self.frame), 0, 69, 18, 0, '', self.x, self.y, self.w, self.h)
         else:
-            self.image.clip_composite_draw(69*self.frame, 0, 69, 18, 0, 'h', self.x, self.y, self.w, self.h)
+            self.image.clip_composite_draw(69*int(self.frame), 0, 69, 18, 0, 'h', self.x, self.y, self.w, self.h)
 
 class Axe(Skill):
     name='axe'
@@ -94,6 +97,7 @@ class Axe(Skill):
         self.dy=20
         self.ay=-1
         self.dx=-4+self.number*3
+        self.speed=60
 
         if Axe.image==None:
             Axe.image=load_image("res/vfx/axe.png")
@@ -101,10 +105,12 @@ class Axe(Skill):
     def update(self):
         if(self.y<0):
             game_world.remove_object(self) 
-        self.rad+=0.2
-        self.x+=self.dx
-        self.y+=self.dy
-        self.dy+=self.ay
+        self.x-=main_state.player.dx*game_framework.frame_time*60
+        self.y-=main_state.player.dy*game_framework.frame_time*60
+        self.rad+=0.2*game_framework.frame_time*self.speed
+        self.x+=self.dx*game_framework.frame_time*self.speed
+        self.y+=self.dy*game_framework.frame_time*self.speed
+        self.dy+=self.ay*game_framework.frame_time*self.speed
     
     def draw(self):
         self.image.composite_draw(self.rad, '', self.x, self.y, self.w, self.h)
@@ -120,17 +126,18 @@ class Book(Skill):
         self.number=num
         self.rad=0
         self.timer=0
+        self.speed=5
 
         if Book.image==None:
             Book.image=load_image("res/vfx/HolyBook.png")
 
     def update(self):
-        if(self.timer>30):
+        if(self.timer>2.5):
             game_world.remove_object(self) 
-        self.rad+=0.1
+        self.rad=self.rad+game_framework.frame_time*self.speed
         self.x=640+math.cos(self.rad+math.radians(360/self.lv*self.number))*40*self.lv
         self.y=400+math.sin(self.rad+math.radians(360/self.lv*self.number))*40*self.lv
-        self.timer+=0.16
+        self.timer+=game_framework.frame_time
     
     def draw(self):
         self.image.draw(self.x, self.y, self.w, self.h)

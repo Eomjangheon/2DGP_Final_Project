@@ -5,6 +5,7 @@ import math
 import game_world
 import codeFile.classCode.exp_jam as exp_jam
 import value
+import game_framework
 setXpos=[-1,0,1,-1,0,1,-1,0,1]
 setYpos=[1,1,1,0,0,0,-1,-1,-1]
 #모든 몬스터 종류의 부모 클래스
@@ -33,10 +34,16 @@ class Monster:
         self.isHitByWhipTimer=0
         self.isHitByAxeTimer=0
         self.isHitByBookTimer=0
+        self.TIME_PER_ACTION=0.5
+        self.ACTION_PER_TIME=1.0/self.TIME_PER_ACTION
+        self.FRAMES_PER_ACTION = 4
+        self.TIME_PER_ACTION1=0.1
+        self.ACTION_PER_TIME1=1.0/self.TIME_PER_ACTION1
+        self.FRAMES_PER_ACTION1 = 4
 
     def update(self):
         #캐릭터의 이동만큼 반대로 이동
-        self.x-=main_state.player.dx ;  self.y-=main_state.player.dy
+        self.x-=main_state.player.dx*game_framework.frame_time*60 ;  self.y-=main_state.player.dy*game_framework.frame_time*60
         #살아있는 상태라면
         if(self.isDie==False):
             #캐릭터를 향해 걷는 방향벡터를 구한다.    
@@ -52,55 +59,56 @@ class Monster:
             self.dy=math.sin(self.theta)*1
             #사라지지 않는 채찍을 위한 타이머
             if(self.isHitByWhip):
-                self.isHitByWhipTimer+=0.16
-            if(self.isHitByWhipTimer>3):
+                self.isHitByWhipTimer+=game_framework.frame_time
+            if(self.isHitByWhipTimer>1):
                 self.isHitByWhip=False
                 self.isHitByWhipTimer=0
 
             if(self.isHitByAxe):
-                self.isHitByAxeTimer+=0.16
-            if(self.isHitByAxeTimer>3):
+                self.isHitByAxeTimer+=game_framework.frame_time
+            if(self.isHitByAxeTimer>1):
                 self.isHitByAxe=False
                 self.isHitByAxeTimer=0
 
             if(self.isHitByBook):
-                self.isHitByBookTimer+=0.16
-            if(self.isHitByBookTimer>3):
+                self.isHitByBookTimer+=game_framework.frame_time
+            if(self.isHitByBookTimer>1):
                 self.isHitByBook=False
                 self.isHitByBookTimer=0
 
-            self.x+=self.dx
-            self.y+=self.dy
+            self.x+=self.dx*game_framework.frame_time*60
+            self.y+=self.dy*game_framework.frame_time*60
             #애니메이션의 자연스러움을 위한 연산
-            self.frame_count=(self.frame_count+1)%32
-            self.frame=self.frame_count//8
+            self.frame = (self.frame + self.FRAMES_PER_ACTION * self.ACTION_PER_TIME * game_framework.frame_time)%4
             self.hit()
             self.addforce()
+
         if(self.isDie==True):
-            self.dieFrame+=1
+            self.dieFrame=(self.dieFrame + self.FRAMES_PER_ACTION1 * self.ACTION_PER_TIME1 * game_framework.frame_time)%32
             self.die()
             
 
     #죽자마자 경험치를 뱉고, 죽는 애니메이션 재생
     def die(self):
-        if self.dieFrame==1:
+        if self.dieFrame<1:
+            self.dieFrame=1
             jam=exp_jam.Exp_jam(self.x,self.y,self.exp)
             game_world.add_object(jam,2)
-        if self.dieFrame==30:
+        if self.dieFrame>=30:
             game_world.remove_object(self)
 
     def draw(self):
         if self.isDie==False:
             #self.hp_bar.draw(self.x,self.y-20,30*(self.hp/self.max_hp),5)
             if(self.dx<0):
-                self.move_image.clip_composite_draw(self.picMoveW*self.frame, 0, self.picMoveW, self.picMoveH, 0, '', self.x, self.y, self.w, self.h)
+                self.move_image.clip_composite_draw(self.picMoveW*int(self.frame), 0, self.picMoveW, self.picMoveH, 0, '', self.x, self.y, self.w, self.h)
             else:
-                self.move_image.clip_composite_draw(self.picMoveW*self.frame,0,self.picMoveW,self.picMoveH,0,'h',self.x,self.y,self.w,self.h)
+                self.move_image.clip_composite_draw(self.picMoveW*int(self.frame),0,self.picMoveW,self.picMoveH,0,'h',self.x,self.y,self.w,self.h)
         else:
             if(self.dx<0):
-                self.die_image.clip_composite_draw(self.picDieW*self.dieFrame, 0, self.picDieW, self.picDieH, 0, '', self.x, self.y, self.w, self.h)
+                self.die_image.clip_composite_draw(self.picDieW*int(self.dieFrame), 0, self.picDieW, self.picDieH, 0, '', self.x, self.y, self.w, self.h)
             else:
-                self.die_image.clip_composite_draw(self.picDieW*self.dieFrame,0,self.picDieW,self.picDieH,0,'h',self.x,self.y,self.w,self.h)
+                self.die_image.clip_composite_draw(self.picDieW*int(self.dieFrame),0,self.picDieW,self.picDieH,0,'h',self.x,self.y,self.w,self.h)
 
     #몬스터끼리 겹치지 않게 서로 밀어낸다.
     #공간분할을 통해 프레임드랍을 줄였다.
@@ -113,14 +121,14 @@ class Monster:
                     if(mon!=self):
                         if(abs(mon.x-self.x)<(self.w) and abs(mon.y-self.y)<(self.h) and mon.isDie==False):
                             if(self.x>mon.x):
-                                self.x+=1
+                                self.x+=50*game_framework.frame_time
                             else:
-                                self.x-=1
+                                self.x-=50*game_framework.frame_time
 
                             if(self.y>mon.y):
-                                self.y+=1
+                                self.y+=50*game_framework.frame_time
                             else:
-                                self.y-=1
+                                self.y-=50*game_framework.frame_time
 
     def hit(self):
         teX=int((self.x+320)//80)
@@ -234,24 +242,24 @@ class DamageFont():
         self.fontX=inX
         self.fontY=inY
         self.timer=0
-        self.size=30
+        self.size=40
         self.first=damage%10
         self.second=damage//10
     
     def update(self):
-        self.fontX-=main_state.player.dx
-        self.fontY-=main_state.player.dy
-        self.timer+=0.16
-        self.fontY+=1
-        self.size-=1
+        self.fontX-=main_state.player.dx*game_framework.frame_time*60
+        self.fontY-=main_state.player.dy*game_framework.frame_time*60
+        self.timer+=game_framework.frame_time
+        self.fontY+=1*game_framework.frame_time*60
+        self.size-=1*game_framework.frame_time*60
         
-        if(self.timer>3):
+        if(self.timer>1):
             game_world.remove_object(self)
 
     def draw(self):
         if(self.second==0):
-            self.damage_font.clip_draw(self.png_info[self.first][0],self.png_info[self.first][1],64,85,self.fontX,self.fontY,self.size,self.size)
+            self.damage_font.clip_draw(self.png_info[self.first][0],self.png_info[self.first][1],64,85,int(self.fontX),int(self.fontY),int(self.size),int(self.size))
         else:
-            self.damage_font.clip_draw(self.png_info[self.second][0],self.png_info[self.second][1],64,85,self.fontX-8,self.fontY,self.size,self.size)
-            self.damage_font.clip_draw(self.png_info[self.first][0],self.png_info[self.first][1],64,85,self.fontX+8,self.fontY,self.size,self.size)
+            self.damage_font.clip_draw(self.png_info[self.second][0],self.png_info[self.second][1],64,85,int(self.fontX)-8,int(self.fontY),int(self.size),int(self.size))
+            self.damage_font.clip_draw(self.png_info[self.first][0],self.png_info[self.first][1],64,85,int(self.fontX)+8,int(self.fontY),int(self.size),int(self.size))
 

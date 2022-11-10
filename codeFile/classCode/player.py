@@ -29,6 +29,11 @@ class Player:
         self.timerSkill1=0
         self.timerSkill2=0
         self.timerSkill3=0
+        self.skill1_counter=0
+        self.skill2_counter=0
+        self.TIME_PER_ACTION=0.5
+        self.ACTION_PER_TIME=1.0/self.TIME_PER_ACTION
+        self.FRAMES_PER_ACTION = 4
         
         if Player.image==None:
             Player.image=load_image('res/character/Antonio_Sheet.png')
@@ -36,45 +41,44 @@ class Player:
             Player.hp_bar=load_image('res/ui/button_c8_normal.png')
     
     def update(self):
-        self.frame_count=(self.frame_count+1)%32
-        self.frame=self.frame_count//8
-        #self.exp+=1
-        #self.hp-=1
+        self.frame = (self.frame + self.FRAMES_PER_ACTION * self.ACTION_PER_TIME * game_framework.frame_time)%4
 
-        self.timerSkill+=0.16
-        self.timerSkill1+=0.16
-        self.timerSkill2+=0.16
-        self.timerSkill3+=0.16
+
+        self.timerSkill+=game_framework.frame_time
+        self.timerSkill1+=game_framework.frame_time
+        self.timerSkill2+=game_framework.frame_time
+        self.timerSkill3+=game_framework.frame_time
         if self.exp>=self.expCoe:
             self.level_up()
 
         if self.my_skill[0]!=0:
-            if self.timerSkill>2:
+            if self.timerSkill>0.5:
                 self.fire_ball()
-                self.timerSkill=0
+                self.timerSkill%=0.5
 
         if self.my_skill[1]!=0:
-            for i in range(self.my_skill[1]):
-                if abs(self.timerSkill1-0.8*(i+1))<0.1:
-                    self.whip(i)
+            if int(self.timerSkill1*4)==self.skill1_counter:
+                self.whip(self.skill1_counter)
+                self.skill1_counter=(self.skill1_counter+1)%self.my_skill[1]
                     
-        if(self.timerSkill1>5):
-            self.timerSkill1=0
+        if(self.timerSkill1>2):
+            self.timerSkill1%=2
 
+        
         if self.my_skill[4]!=0:
-            for i in range(self.my_skill[4]):
-                if abs(self.timerSkill2-0.8*(i+1))<0.1:
-                    self.axe(i)
+            if int(self.timerSkill2*4)==self.skill2_counter:
+                self.axe(self.skill2_counter)
+                self.skill2_counter=(self.skill2_counter+1)%self.my_skill[4]
                     
-        if(self.timerSkill2>5):
-            self.timerSkill2=0
+        if(self.timerSkill2>2):
+            self.timerSkill2%=2
 
         if self.my_skill[5]!=0:
             if(self.timerSkill3<1):
                 for i in range(self.my_skill[5]):
                     self.book(i)
                 self.timerSkill3=2
-            self.timerSkill3%=50
+            self.timerSkill3%=5
         
         self.hit()
     
@@ -85,14 +89,14 @@ class Player:
             else:
                 self.image.clip_composite_draw(0,0,32,32,0,'h',self.x,self.y,64,64)
         elif(self.dx>0):
-            self.image.clip_draw(self.frame*32,0,32,32,self.x,self.y,64,64)
+            self.image.clip_draw(int(self.frame)*32,0,32,32,self.x,self.y,64,64)
         elif(self.dx<0):
-            self.image.clip_composite_draw(self.frame*32,0,32,32,0,'h',self.x,self.y,64,64)
+            self.image.clip_composite_draw(int(self.frame)*32,0,32,32,0,'h',self.x,self.y,64,64)
         elif(self.dy!=0):
             if self.prior_dir=='Right':
-                self.image.clip_draw(self.frame*32,0,32,32,self.x,self.y,64,64)
+                self.image.clip_draw(int(self.frame)*32,0,32,32,self.x,self.y,64,64)
             elif self.prior_dir=='Left':
-                self.image.clip_composite_draw(self.frame*32,0,32,32,0,'h',self.x,self.y,64,64)
+                self.image.clip_composite_draw(int(self.frame)*32,0,32,32,0,'h',self.x,self.y,64,64)
         self.hp_bar.draw(640,350,100*(self.hp/self.max_hp),10)
 
     def level_up(self):
