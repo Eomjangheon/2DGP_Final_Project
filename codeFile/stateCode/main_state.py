@@ -103,6 +103,8 @@ def update():
         game_world.add_object(mon,3)
         mon=monster.Armor()
         game_world.add_object(mon,3)
+        mon=monster.Buer()
+        game_world.add_object(mon,3)
         monTime=0
     
     #공간분할 총 24*18칸

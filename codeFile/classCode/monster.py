@@ -233,6 +233,26 @@ class Armor(Monster):
         if self.die_image==None:
             self.die_image=load_image("res/monster/Armor1_die.png")
 
+class Buer(Monster):
+    move_image=None
+    die_image=None
+    def __init__(self):
+        super().__init__()
+        self.max_hp=20
+        self.hp=20
+        self.exp=2
+        self.picMoveW=26
+        self.picMoveH=30
+        self.picDieW=37
+        self.picDieH=38
+        self.w=52
+        self.h=60
+        self.damage=5
+        if self.move_image==None:
+            self.move_image=load_image("res/monster/Buer1_move.png")
+        if self.die_image==None:
+            self.die_image=load_image("res/monster/Buer1_die.png")
+
 class DamageFont():
     damage_font=None
     png_info=[[0,170],[64,170],[128,170],[192,170],[0,85],[64,85],[128,85],[192,85],[0,0],[64,0]]
