@@ -55,7 +55,7 @@ class Sound_Manager:
             self.soundCheck[5]=True
     def self_update(self):
         self.sound_stack+=1
-        self.sound_stack%=5
+        self.sound_stack%=10
         if self.sound_stack==0:
             for i in range(6):
                 self.soundCheck[i]=False

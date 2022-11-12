@@ -30,6 +30,7 @@ class Monster:
         self.dieFrame=0
         self.hp=0
         self.max_hp=0
+        self.speed=0
         self.picMoveW,self.picMoveH,self.picDieW,self.picDieH=0,0,0,0
         self.isHitByWhipTimer=0
         self.isHitByAxeTimer=0
@@ -55,8 +56,8 @@ class Monster:
             if(self.dx<0):
                 self.theta+=math.pi
             #삼각함수로 속도를 정규화한다.
-            self.dx=math.cos(self.theta)*1
-            self.dy=math.sin(self.theta)*1
+            self.dx=math.cos(self.theta)*1*self.speed
+            self.dy=math.sin(self.theta)*1*self.speed
             #사라지지 않는 채찍을 위한 타이머
             if(self.isHitByWhip):
                 self.isHitByWhipTimer+=game_framework.frame_time
@@ -158,33 +159,33 @@ class Monster:
                                     self.x-=30
                                 else:
                                     self.x+=30
-                            self.hp-=skill.damage
-                            self.isHitByWhip=True
-                            main_state.sManager[value.num].Monster_hit_sound()
-                            damage_font=DamageFont(self.x,self.y,skill.damage)
-                            game_world.add_object(damage_font,5)
+                                self.hp-=skill.damage
+                                self.isHitByWhip=True
+                                main_state.sManager[value.num].Monster_hit_sound()
+                                damage_font=DamageFont(self.x,self.y,skill.damage)
+                                game_world.add_object(damage_font,5)
                         elif skill.name=='axe':
                             if self.isHitByAxe==False:
                                 if(self.x<=640):
                                     self.x-=30
                                 else:
                                     self.x+=30
-                            self.hp-=skill.damage
-                            self.isHitByAxe=True
-                            main_state.sManager[value.num].Monster_hit_sound()
-                            damage_font=DamageFont(self.x,self.y,skill.damage)
-                            game_world.add_object(damage_font,5)
+                                self.hp-=skill.damage
+                                self.isHitByAxe=True
+                                main_state.sManager[value.num].Monster_hit_sound()
+                                damage_font=DamageFont(self.x,self.y,skill.damage)
+                                game_world.add_object(damage_font,5)
                         elif skill.name=='book':
                             if self.isHitByBook==False:
                                 if(self.x<=640):
                                     self.x-=30
                                 else:
                                     self.x+=30
-                            self.hp-=skill.damage
-                            self.isHitByBook=True
-                            main_state.sManager[value.num].Monster_hit_sound()
-                            damage_font=DamageFont(self.x,self.y,skill.damage)
-                            game_world.add_object(damage_font,5)
+                                self.hp-=skill.damage
+                                self.isHitByBook=True
+                                main_state.sManager[value.num].Monster_hit_sound()
+                                damage_font=DamageFont(self.x,self.y,skill.damage)
+                                game_world.add_object(damage_font,5)
                         
 
 
@@ -208,6 +209,7 @@ class Bat(Monster):
         self.w=57
         self.h=63
         self.damage=3
+        self.speed=1
         if self.move_image==None:
             self.move_image=load_image("res/monster/Bat1_move.png")
         if self.die_image==None:
@@ -228,6 +230,7 @@ class Armor(Monster):
         self.w=76
         self.h=72
         self.damage=5
+        self.speed=1
         if self.move_image==None:
             self.move_image=load_image("res/monster/Armor1_move.png")
         if self.die_image==None:
@@ -248,10 +251,32 @@ class Buer(Monster):
         self.w=52
         self.h=60
         self.damage=5
+        self.speed=1
         if self.move_image==None:
             self.move_image=load_image("res/monster/Buer1_move.png")
         if self.die_image==None:
             self.die_image=load_image("res/monster/Buer1_die.png")
+
+class Hoodie(Monster):
+    move_image=None
+    die_image=None
+    def __init__(self):
+        super().__init__()
+        self.max_hp=10000
+        self.hp=10000
+        self.exp=2
+        self.picMoveW=36
+        self.picMoveH=37
+        self.picDieW=47
+        self.picDieH=39
+        self.w=108
+        self.h=111
+        self.damage=100
+        self.speed=10
+        if self.move_image==None:
+            self.move_image=load_image("res/monster/Hoodie1_move.png")
+        if self.die_image==None:
+            self.die_image=load_image("res/monster/Hoodie1_die.png")
 
 class DamageFont():
     damage_font=None

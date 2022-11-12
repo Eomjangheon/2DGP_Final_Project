@@ -4,6 +4,7 @@ import codeFile.stateCode.main_state as main_state
 import value
 import time
 import game_framework
+from codeFile.classCode.monster import*
 
 #main_state의 UI객체
 class Main_state_ui:
@@ -12,8 +13,10 @@ class Main_state_ui:
     exp_box=None
     exp_bar=None
     total_time=None
-    total_second=0
+    total_second=40
     total_miniute=0
+    is_spawn_hoodie=False
+    mon_time=0
     
     def __init__(self):
         if Main_state_ui.level_font==None:
@@ -34,6 +37,24 @@ class Main_state_ui:
         self.time_font.draw(600,720,"{} : {}".format(int(self.total_miniute),int(self.total_second)),(255,255,255))
 
     def update(self):
+        self.mon_time+=game_framework.frame_time*(self.total_miniute+1)
         self.total_time+=game_framework.frame_time
         self.total_second=self.total_time%60
         self.total_miniute=self.total_time//60
+        if(int(self.total_second)==10 and self.is_spawn_hoodie==False):
+            Main_state_ui.is_spawn_hoodie=True
+            self.spawn_hoodie()
+        if(len(game_world.objects[3])<300 and self.mon_time>1 and self.is_spawn_hoodie==False):
+            mon=Bat()
+            game_world.add_object(mon,3)
+            mon=Armor()
+            game_world.add_object(mon,3)
+            mon=Buer()
+            game_world.add_object(mon,3)
+            self.mon_time=0
+    def spawn_hoodie(self):
+        for mon in game_world.objects[3]:
+            mon.isDie=True
+            mon.die()
+        mon=Hoodie()
+        game_world.add_object(mon,3)

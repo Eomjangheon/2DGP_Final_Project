@@ -96,16 +96,9 @@ def update():
     global monTime
     global objectSpaceMon
     global objectSpaceSkill
-    monTime+=game_framework.frame_time
+    
     #최대 몬스터 제한
-    if(len(game_world.objects[3])<300 and monTime>0.1):
-        mon=monster.Bat()
-        game_world.add_object(mon,3)
-        mon=monster.Armor()
-        game_world.add_object(mon,3)
-        mon=monster.Buer()
-        game_world.add_object(mon,3)
-        monTime=0
+
     
     #공간분할 총 24*18칸
     objectSpaceMon=[[[] for k in range (24)] for i in range(18)] 
