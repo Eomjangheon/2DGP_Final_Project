@@ -41,10 +41,10 @@ class Main_state_ui:
         self.total_time+=game_framework.frame_time
         self.total_second=self.total_time%60
         self.total_miniute=self.total_time//60
-        if(int(self.total_second)==10 and self.is_spawn_hoodie==False):
+        if(int(self.total_second)==30 and self.is_spawn_hoodie==False):
             Main_state_ui.is_spawn_hoodie=True
             self.spawn_hoodie()
-        if(len(game_world.objects[3])<300 and self.mon_time>1 and self.is_spawn_hoodie==False):
+        if(len(game_world.objects[3])<300 and self.mon_time>0.15 and self.is_spawn_hoodie==False):
             mon=Bat()
             game_world.add_object(mon,3)
             mon=Armor()

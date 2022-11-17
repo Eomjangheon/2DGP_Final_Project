@@ -8,6 +8,7 @@ import codeFile.classCode.exp_jam as exp_jam
 import codeFile.classCode.monster as monster
 import codeFile.classCode.sound_manager as sound_manager
 import codeFile.stateCode.pause_state as pause_state
+import codeFile.stateCode.game_over_state as game_over_state
 player=None
 name = "mainState"
 monTime=0
@@ -138,7 +139,7 @@ def draw():
 def die():
     global player
     if player.hp<=0:
-        game_framework.change_state(start_state)
+        game_framework.push_state(game_over_state)
         
 
 def pause(): pass

@@ -24,7 +24,7 @@ class Player:
         self.hitTimer=0
         self.grabDis=50
         #fireball
-        self.my_skill=[2,2,1,2,2,2,1,1]
+        self.my_skill=[2,2,2,2,2,2,2,2]
         self.timerSkill=0
         self.timerSkill1=0
         self.timerSkill2=0
@@ -41,6 +41,7 @@ class Player:
             Player.hp_bar=load_image('res/ui/button_c8_normal.png')
     
     def update(self):
+        self.hp-=1
         self.frame = (self.frame + self.FRAMES_PER_ACTION * self.ACTION_PER_TIME * game_framework.frame_time)%4
 
 
