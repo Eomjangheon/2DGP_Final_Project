@@ -15,14 +15,13 @@ class Game_over_state_ui:
     def __init__(self):
         if Game_over_state_ui.game_over_font==None:
             Game_over_state_ui.game_over_font=load_font('res/fonts/KO.ttf',40)
-            #여기부터
             
-        # if Game_over_state_ui.quit_frame==None:
-        #     Game_over_state_ui.quit_frame=load_image('res/ui/levelup_frame.png')
+        if Game_over_state_ui.quit_frame==None:
+            Game_over_state_ui.quit_frame=load_image('res/ui/button_c8_normal.png')
         # if Game_over_state_ui.skill_frame==None:
         #     Game_over_state_ui.skill_frame=load_image('res/ui/frame_skill.png')
-        # if Game_over_state_ui.arrow==None:
-        #     Game_over_state_ui.arrow=load_image('res/ui/arrow.png')
+        if Game_over_state_ui.arrow==None:
+            Game_over_state_ui.arrow=load_image('res/ui/arrow.png')
         # if Game_over_state_ui.item_frame==None:
         #     Game_over_state_ui.item_frame=load_image('res/ui/frameB9.png')
 
@@ -32,8 +31,8 @@ class Game_over_state_ui:
         pass
     
     def draw(self):
-        #self.levelup_frame.draw(640,380,600,650)
-        self.game_over_font.draw(550,600,"Quit",(255,255,255))
-        #self.arrow.draw(330,500-self.selectNum*150,100,100)
-        #self.arrow.composite_draw(0,'h',950,500-self.selectNum*150,100,100)
+        self.quit_frame.draw(640,200,300,100)
+        self.game_over_font.draw(600,200,"Quit",(255,255,255))
+        self.arrow.draw(430,200,100,100)
+        self.arrow.composite_draw(0,'h',850,200,100,100)
 
