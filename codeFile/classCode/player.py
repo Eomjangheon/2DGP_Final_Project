@@ -18,13 +18,13 @@ class Player:
         self.frame_count=0
         self.level=1
         self.exp=0
-        self.hp=200
-        self.max_hp=200
-        self.expCoe=20
+        self.hp=100
+        self.max_hp=100
+        self.expCoe=10
         self.hitTimer=0
         self.grabDis=50
         #fireball
-        self.my_skill=[2,2,2,2,2,2,2,2]
+        self.my_skill=[1,0,0,0,0,0,0,0]
         self.timerSkill=0
         self.timerSkill1=0
         self.timerSkill2=0
@@ -41,7 +41,7 @@ class Player:
             Player.hp_bar=load_image('res/ui/button_c8_normal.png')
     
     def update(self):
-        self.hp-=1
+        #self.hp-=1
         self.frame = (self.frame + self.FRAMES_PER_ACTION * self.ACTION_PER_TIME * game_framework.frame_time)%4
 
 
@@ -58,16 +58,23 @@ class Player:
                 self.timerSkill%=0.5
 
         if self.my_skill[1]!=0:
-            if int(self.timerSkill1*4)==self.skill1_counter:
+            if(self.my_skill[1]==1 and self.timerSkill1<0.1):
+                self.timerSkill1=0.2
+                self.whip(0)
+
+            elif int(self.timerSkill1*4)==self.skill1_counter and self.my_skill[1]!=1:
                 self.whip(self.skill1_counter)
                 self.skill1_counter=(self.skill1_counter+1)%self.my_skill[1]
                     
         if(self.timerSkill1>2):
             self.timerSkill1%=2
 
-        
         if self.my_skill[4]!=0:
-            if int(self.timerSkill2*4)==self.skill2_counter:
+            if(self.my_skill[4]==1 and self.timerSkill2<0.1):
+                self.timerSkill2=0.2
+                self.axe(0)
+            
+            elif int(self.timerSkill2*4)==self.skill2_counter and self.my_skill[4]!=1:
                 self.axe(self.skill2_counter)
                 self.skill2_counter=(self.skill2_counter+1)%self.my_skill[4]
                     
@@ -123,13 +130,17 @@ class Player:
             for i in range(8,10+1):
                 for j in range(11,13+1):
                     for mon in main_state.objectSpaceMon[i][j]:
-                        if(abs(mon.x-640)<16+mon.w and abs(mon.y-400)<16+mon.h):
+                        if(abs(mon.x-640)<10+mon.w and abs(mon.y-400)<10+mon.h):
                             if mon.isDie==False:
                                 self.hp-=mon.damage
-                                self.hitTimer+=1
+                                self.hitTimer+=0.01
+                                main_state.sManager[0].Hit_sound()
+                                print(self.hp)
                                 return
         else:
-            self.hitTimer=(self.hitTimer+1)%10
+            self.hitTimer=(self.hitTimer+game_framework.frame_time)
+            if(self.hitTimer>0.3):
+                self.hitTimer=0
             
                 
     #화염구 스킬
@@ -137,6 +148,7 @@ class Player:
         for i in range(self.my_skill[0]):
             fireball=skill.FireBall(self.my_skill[0])
             game_world.add_object(fireball,4)
+            main_state.sManager[value.num].Axe_sound()
     #채찍스킬
     def whip(self,num):
         whip=skill.Whip(self.my_skill[1],num)
