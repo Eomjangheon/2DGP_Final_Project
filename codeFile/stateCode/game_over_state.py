@@ -13,16 +13,19 @@ name = "gameOverState"
 #게임오버시 들어오는 state이다.
 
 def enter():
-    global gou
+    global gou ,bgm,mainBgm
     gou=game_over_state_ui.Game_over_state_ui()
-    
-    # bgm=load_wav('res/sound/level_up_sound.wav')
-    # bgm.set_volume(value.volume)
-    # bgm.play()
-    
+    bgm=load_wav('res/sound/game_over_sound.wav')
+    bgm.set_volume(value.volume)
+    bgm.play()
+    mainBgm=load_music('res/sound/bgm_TheEndMain.ogg')
+    mainBgm.set_volume(value.volume)
+    mainBgm.repeat_play()
 
 def exit():
-    pass
+    global bgm,mainBgm
+    del(bgm)
+    del(mainBgm)
 
 
 def handle_events():
@@ -39,7 +42,8 @@ def handle_events():
             
             #스킬 선택 버튼이다. 스킬 개수에 맞게 이동가능하다.
             elif event.key==SDLK_SPACE:
-                game_framework.change_state(start_state)
+                main_state.from_game_over=True
+                game_framework.pop_state()
         
 def update():
     pass

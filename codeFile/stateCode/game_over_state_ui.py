@@ -9,6 +9,7 @@ class Game_over_state_ui:
     quit_frame=None
     game_over_image=None
     arrow=None
+    gama_over_back=None
     #구현된 스킬, 패시브 개수만큼
     
 
@@ -18,12 +19,12 @@ class Game_over_state_ui:
             
         if Game_over_state_ui.quit_frame==None:
             Game_over_state_ui.quit_frame=load_image('res/ui/button_c8_normal.png')
-        # if Game_over_state_ui.skill_frame==None:
-        #     Game_over_state_ui.skill_frame=load_image('res/ui/frame_skill.png')
         if Game_over_state_ui.arrow==None:
             Game_over_state_ui.arrow=load_image('res/ui/arrow.png')
-        # if Game_over_state_ui.item_frame==None:
-        #     Game_over_state_ui.item_frame=load_image('res/ui/frameB9.png')
+        if Game_over_state_ui.game_over_image==None:
+            Game_over_state_ui.game_over_image=load_image('res/ui/gameOver.png')
+
+
 
         
 
@@ -35,4 +36,5 @@ class Game_over_state_ui:
         self.game_over_font.draw(600,200,"Quit",(255,255,255))
         self.arrow.draw(430,200,100,100)
         self.arrow.composite_draw(0,'h',850,200,100,100)
+        self.game_over_image.draw(640,500,700,230)
 
