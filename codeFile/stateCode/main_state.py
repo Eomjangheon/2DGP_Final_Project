@@ -12,6 +12,7 @@ import codeFile.stateCode.game_over_state as game_over_state
 player=None
 name = "mainState"
 monTime=0
+from_game_over=False
 objectSpaceMon=[[[] for i in range (24)] for i in range(18)] 
 objectSpaceSkill=[[[] for i in range (24)] for i in range(18)]
 #현재는 스킬들의 텍스트를 여기서 관리하지만 나중에 파일입출력 예정
@@ -143,5 +144,9 @@ def die():
         
 
 def pause(): pass
-def resume(): pass
+def resume(): 
+    global from_game_over
+    if from_game_over==True:
+        from_game_over=False
+        game_framework.change_state(start_state)
 
