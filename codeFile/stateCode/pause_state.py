@@ -26,9 +26,6 @@ def handle_events():
         if event.type==SDL_QUIT:
             game_framework.quit()
         elif event.type==SDL_KEYDOWN:
-            #---------------------------------------
-            #escape는 수정 예정이다. 지금은 개발자용 키
-            #---------------------------------------
             if event.key==SDLK_ESCAPE:
                 game_framework.pop_state()
 
