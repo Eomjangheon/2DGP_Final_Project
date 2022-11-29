@@ -199,8 +199,8 @@ class Bat(Monster):
     die_image=None
     def __init__(self):
         super().__init__()
-        self.max_hp=10
-        self.hp=10
+        self.max_hp=5
+        self.hp=5
         self.exp=1
         self.picMoveW=19
         self.picMoveH=21
@@ -241,8 +241,8 @@ class Buer(Monster):
     die_image=None
     def __init__(self):
         super().__init__()
-        self.max_hp=20
-        self.hp=20
+        self.max_hp=40
+        self.hp=40
         self.exp=2
         self.picMoveW=26
         self.picMoveH=30
