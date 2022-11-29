@@ -31,8 +31,7 @@ def exit():
 
 def update():
     global font_time
-    delay(0.01)
-    font_time = (font_time+0.01)%2
+    font_time = (font_time+game_framework.frame_time)%2
     
 
 def draw():
@@ -43,7 +42,7 @@ def draw():
     image[3].draw(200, 200,700,1000)
     image[1].draw(640, 200,800,400)
     image[4].draw(640, 600,400,200)
-    if(font_time<1.5):
+    if(font_time<1.0):
         start_font.draw(340,70,"press Space Bar to start",(255,255,255))
     update_canvas()
 
